@@ -8,7 +8,7 @@ class Activite {
     private $description;
     private $shortDescription;
 
-    public function __construct($id, $nom, $lieu) {
+    public function __construct($id=-1, $nom="", $lieu="") {
         $this->setId($id);
         $this->setNom($nom);
         $this->setLieu($lieu);

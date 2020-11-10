@@ -1,6 +1,7 @@
 <?php
 
 require_once("storage/IActiviteStorage.php");
+require_once("mdoel/Activite.php");
 
 class StubActiviteStorage implements IActiviteStorage {
 
@@ -21,7 +22,22 @@ class StubActiviteStorage implements IActiviteStorage {
         return null;
     }
 
+    public function readByName($name) {
+        if(array_key_exists($name, $this->data)) 
+            return $this->data[$name];
+
+        return null;
+    }
+
     public function readAll() {
         return $this->data;
+    }
+
+    public function create(Activite $a) {
+        $this->data[] = $a;
+    }
+
+    public function update($id, Activite $a) {
+        $this->data[$id] = $a;
     }
 }
