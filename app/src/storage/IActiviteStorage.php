@@ -14,4 +14,6 @@ interface IActiviteStorage {
 
     public function update($id, Activite $activite);
 
+    public function delete($id);
+
 }

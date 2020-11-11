@@ -5,7 +5,7 @@ require_once("model/Activite.php");
 
 class BDDActiviteStorage implements IActiviteStorage {
 
-    private PDO $bdd;
+    private $bdd;
 
     public function __construct() {
         try {
@@ -57,6 +57,7 @@ class BDDActiviteStorage implements IActiviteStorage {
         $sth->bindValue(":short_desc", $a->getShortDescription());
         $sth->bindValue(":desc", $a->getDescription());
         $sth->bindValue(":id_utilisateur", 1, PDO::PARAM_INT);
+        
         $sth->execute();
     }
 
@@ -67,6 +68,14 @@ class BDDActiviteStorage implements IActiviteStorage {
         $sth->bindValue(":lieu", $activite->getLieu());
         $sth->bindValue(":short_desc", $activite->getShortDescription());
         $sth->bindValue(":desc", $activite->getDescription());
+
+        $sth->execute();
+    }
+
+    public function delete($id) {
+        $sth = $this->bdd->prepare("DELETE FROM ACTIVITE WHERE ID=:id");
+        $sth->bindValue(":id", $id, PDO::PARAM_INT);
+       
         $sth->execute();
     }
 

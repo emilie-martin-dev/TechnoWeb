@@ -19,6 +19,10 @@ class Router {
                 $ctrl->showUpdateActivite($urlPath[1]);
             elseif(isset($urlPath[1]) && isset($urlPath[2]) && $urlPath[2] == "update" && $_SERVER["REQUEST_METHOD"] == "POST")
                 $ctrl->modifActivite($urlPath[1], $_POST);
+            elseif(isset($urlPath[1]) && isset($urlPath[2]) && $urlPath[2] == "delete" && $_SERVER["REQUEST_METHOD"] == "GET")
+                $ctrl->showDeleteActivite($urlPath[1]);
+            elseif(isset($urlPath[1]) && isset($urlPath[2]) && $urlPath[2] == "delete" && $_SERVER["REQUEST_METHOD"] == "POST")
+                $ctrl->deleteActivite($urlPath[1]);
             elseif(isset($urlPath[1]))
                 $ctrl->showInformation($urlPath[1]);
             else 
@@ -38,6 +42,10 @@ class Router {
 
     public function getActiviteModifURL($id) {
         return "/activite/" . $id . "/update";
+    }
+
+    public function getActiviteSupprimerURL($id) {
+        return "/activite/" . $id . "/delete";
     }
 
 }

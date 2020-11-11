@@ -8,7 +8,7 @@ class View {
     protected $title;
     protected $content;
 
-    protected Router $router;
+    protected $router;
 
     public function __construct(Router $router) {
         $this->router = $router;
@@ -52,6 +52,12 @@ class View {
 
         $urlAction = $update ? $this->router->getActiviteModifURL($builder->getAttribute(BuilderActivite::FIELD_ID)) : $this->router->getActiviteCreationURL();
 
-        include_once("template/activite/add.php");
+        include_once("template/activite/form.php");
+    }
+
+    public function makeDeleteActivite($id) {
+        $urlAction = $this->router->getActiviteSupprimerURL($id);
+
+        include_once("template/activite/delete.php");
     }
 }

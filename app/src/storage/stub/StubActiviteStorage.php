@@ -40,4 +40,8 @@ class StubActiviteStorage implements IActiviteStorage {
     public function update($id, Activite $a) {
         $this->data[$id] = $a;
     }
+
+    public function delete($id) {
+        unset($this->data[$id]);
+    }
 }

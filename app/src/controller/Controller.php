@@ -3,11 +3,12 @@
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
 require_once("storage/IActiviteStorage.php");
+require_once("view/View.php");
 
 class Controller {
 
-    protected View $view;
-    protected IActiviteStorage $activiteStorage;
+    protected $view;
+    protected $activiteStorage;
 
     public function __construct(View $view, IActiviteStorage $activiteStorage) {
         $this->view = $view;
@@ -56,5 +57,18 @@ class Controller {
             $this->activiteStorage->update($id, $builder->create());
 
         $this->showInformation($id);
+    }
+
+    public function showDeleteActivite($id) {
+        if($this->activiteStorage->read($id) == null)
+            $this->view->makeErrorPage();
+        else
+            $this->view->makeDeleteActivite($id);
+    }
+
+    public function deleteActivite($id) {
+        $this->activiteStorage->delete($id);
+
+        $this->showList();
     }
 }
