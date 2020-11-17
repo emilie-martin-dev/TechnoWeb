@@ -9,9 +9,11 @@ class View {
     protected $content;
 
     protected $router;
+    protected $feedback;
 
-    public function __construct(Router $router) {
-        $this->router = $router;
+    public function __construct($feedback="") {
+        $this->router = Router::getInstance();
+        $this->feedback = $feedback;
     }
 
     public function makeActivitePage(Activite $activite) {
@@ -32,7 +34,7 @@ class View {
         include_once("template/activite/consulter.php");
     }
 
-    public function makeActiviteCreationPage($builder, $update=false) {
+    public function makeActiviteCreationPage(BuilderActivite $builder, $update=false) {
         $this->title = "Création d'une activité";
 
         $nomFieldValue = htmlspecialchars($builder->getAttribute(BuilderActivite::FIELD_NOM), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
@@ -42,7 +44,7 @@ class View {
         $errors = $builder->getError();
 
         $errorDiv = "";
-        if(count($errors) > 0) {
+        if($errors != null && count($errors) > 0) {
             $errorDiv .= "<div><ul>";
             foreach($errors as $e) {
                 $errorDiv .= "<li>" . $e . "</li>";

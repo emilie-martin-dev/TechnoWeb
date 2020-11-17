@@ -9,10 +9,12 @@ class Controller {
 
     protected $view;
     protected $activiteStorage;
+    protected $router;
 
     public function __construct(View $view, IActiviteStorage $activiteStorage) {
         $this->view = $view;
         $this->activiteStorage = $activiteStorage;
+        $this->router = Router::getInstance();
     }
 
     public function showInformation(String $id) {
@@ -29,34 +31,54 @@ class Controller {
     }
 
     public function showAddActivite() {
-        $this->view->makeActiviteCreationPage(new BuilderActivite(array()));
-    }
-
-    public function saveNewActivite(array $data) {
-        $builder = new BuilderActivite($data);
-        if($builder->isValid())
-            $this->activiteStorage->create($builder->create());
+        $builder = $this->router->getFormData();
+        if($builder == null) {
+            $builder = new BuilderActivite(array());
+        }
 
         $this->view->makeActiviteCreationPage($builder);
     }
 
-    public function showUpdateActivite($id) {
-        $activite = $this->activiteStorage->read($id);
+    public function saveNewActivite(array $data) {
+        $builder = new BuilderActivite($data);
+        
+        if($builder->isValid()) {
+            $id = $this->activiteStorage->create($builder->create());
 
-        if($activite != null) {
-            $builder = BuilderActivite::buildFromActivite($this->activiteStorage->read($id));
-            $this->view->makeActiviteCreationPage($builder, true);
+            $this->router->POSTredirect($this->router->getActiviteURL($id), "Création réussie");
         } else {
-            $this->view->makeErrorPage();
-        }           
+            $this->router->setFormData($builder);
+            $this->router->POSTredirect($this->router->getActiviteCreationURL(), "Formulaire invalide");
+        }
+    }
+
+    public function showUpdateActivite($id) {
+        $builder = $this->router->getFormData();
+        if($builder == null) {
+            $activite = $this->activiteStorage->read($id);
+
+            if($activite == null) {
+                $this->view->makeErrorPage();
+                return;
+            }
+                
+            $builder = BuilderActivite::buildFromActivite($this->activiteStorage->read($id));
+            
+        }
+
+        $this->view->makeActiviteCreationPage($builder, true);
     }
 
     public function modifActivite($id, array $data) {
         $builder = new BuilderActivite($data);
-        if($builder->isValid())
+        if($builder->isValid()) {
             $this->activiteStorage->update($id, $builder->create());
 
-        $this->showInformation($id);
+            $this->router->POSTredirect($this->router->getActiviteURL($id), "Modfication réussie");
+        } else {
+            $this->router->setFormData($builder);
+            $this->router->POSTredirect($this->router->getActiviteModifURL($id), "Formulaire invalide");
+        }
     }
 
     public function showDeleteActivite($id) {
@@ -69,6 +91,6 @@ class Controller {
     public function deleteActivite($id) {
         $this->activiteStorage->delete($id);
 
-        $this->showList();
+        $this->router->POSTredirect($this->router->getActiviteListURL(), "Suppression réussie");
     }
 }

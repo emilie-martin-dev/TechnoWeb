@@ -6,11 +6,36 @@ require_once("storage/bdd/BDDActiviteStorage.php");
 
 class Router {
 
+    const SESSION_FORM_URL = "formUrl";
+    const SESSION_FORM = "form";
+
+    private static $instance = null;
+
+    private function __construct() {
+    }
+
+    public static function getInstance() {
+        if(Router::$instance == null) {
+            Router::$instance = new Router();  
+        }
+
+        return Router::$instance;
+    }
+
     public function main() {
-        $urlPath = explode("/", substr($_SERVER['PATH_INFO'], 1));
+        session_name("ActivNormandie");
+        session_start();
+
+        if(isset($_SESSION[Router::SESSION_FORM_URL]) && $_SESSION[Router::SESSION_FORM_URL] != $_SERVER["PATH_INFO"]) {
+            unset($_SESSION[Router::SESSION_FORM_URL]);
+            unset($_SESSION[Router::SESSION_FORM]);
+        }
+        
+        $_SESSION["test"] = "coucou";
+        $urlPath = explode("/", substr($_SERVER["PATH_INFO"], 1));
 
         if($urlPath[0] == "activite") {
-            $ctrl = new Controller(new View($this), new BDDActiviteStorage());
+            $ctrl = new Controller(new View(), new BDDActiviteStorage());
             if(isset($urlPath[1]) && $urlPath[1] == "add" && $_SERVER["REQUEST_METHOD"] == "GET")
                 $ctrl->showAddActivite();
             elseif(isset($urlPath[1]) && $urlPath[1] == "add" && $_SERVER["REQUEST_METHOD"] == "POST")
@@ -31,6 +56,25 @@ class Router {
             echo "404";
         }
     } 
+
+    public function POSTredirect($url, $feedback="") {
+        $_SESSION['feedback'] = $feedback;
+
+        header("Location: " . $url, true, 303);
+    }
+
+    public function getFormData() {
+        return (isset($_SESSION[Router::SESSION_FORM])) ? $_SESSION[Router::SESSION_FORM] : null;
+    }
+
+    public function setFormData($formData) {
+        $_SESSION[Router::SESSION_FORM] = $formData;
+        $_SESSION[Router::SESSION_FORM_URL] = $_SERVER["PATH_INFO"];
+    }
+
+    public function getActiviteListURL() {
+        return "/activite";
+    }
 
     public function getActiviteURL($id) {
         return "/activite/" . $id;

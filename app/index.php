@@ -4,5 +4,5 @@ set_include_path("./src");
 require_once("credentials.php");
 require_once("Router.php");
 
-$router = new Router();
+$router = Router::getInstance();
 $router->main();

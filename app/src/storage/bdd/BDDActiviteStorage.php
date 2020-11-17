@@ -59,6 +59,8 @@ class BDDActiviteStorage implements IActiviteStorage {
         $sth->bindValue(":id_utilisateur", 1, PDO::PARAM_INT);
         
         $sth->execute();
+        
+        return $this->bdd->lastInsertId();
     }
 
     public function update($id, Activite $activite) {
