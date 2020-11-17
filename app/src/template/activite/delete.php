@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello World HTML</title>
-    </head>
+<?php
+    include("template/base/header_html.php");
+?>
 
-    <body>
-        <p>Confirmer?</p>
-        <form action="<?= $urlAction?>" method="POST">
-            <input type="submit" value="Valider"/>
-        </form>
-    </body>
-</html>
+<p>Confirmer?</p>
+<form action="<?= $urlAction?>" method="POST">
+    <input type="submit" value="Valider"/>
+</form>
+
+<?php
+    include("template/base/footer_html.php");
+?>

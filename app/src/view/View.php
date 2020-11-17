@@ -5,9 +5,6 @@ require_once("model/builder/BuilderActivite.php");
 require_once("Router.php");
 
 class View {
-    protected $title;
-    protected $content;
-
     protected $router;
     protected $feedback;
 
@@ -16,33 +13,11 @@ class View {
         $this->feedback = $feedback;
     }
 
-    public function makeActivitePage(Activite $activite) {
-        $this->title = $activite->getNom();
-        $this->content = $activite->getLieu();
-
-        include_once("template/activite/consulter.php");
+    public function escapeHtmlSpecialChars($str) {
+        return htmlspecialchars($str, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
     }
 
-    public function makeListPage($activites) {
-        include_once("template/activite/lister.php");
-    }
-
-    public function makeErrorPage() {
-        $this->title = "Error";
-        $this->content = "Error";
-
-        include_once("template/activite/consulter.php");
-    }
-
-    public function makeActiviteCreationPage(BuilderActivite $builder, $update=false) {
-        $this->title = "Création d'une activité";
-
-        $nomFieldValue = htmlspecialchars($builder->getAttribute(BuilderActivite::FIELD_NOM), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
-        $lieuFieldValue = htmlspecialchars($builder->getAttribute(BuilderActivite::FIELD_LIEU), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
-        $shortDescriptionFieldValue = htmlspecialchars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
-        $descriptionFieldValue = htmlspecialchars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
-        $errors = $builder->getError();
-
+    public function generateErrorDiv($errors)  {
         $errorDiv = "";
         if($errors != null && count($errors) > 0) {
             $errorDiv .= "<div><ul>";
@@ -52,6 +27,38 @@ class View {
             $errorDiv .= "</ul></div>";
         }
 
+        return $errorDiv;
+    }
+
+    public function makeActivitePage(Activite $activite) {
+        $title = $activite->getNom();
+        $content = $activite->getLieu();
+
+        include_once("template/activite/consulter.php");
+    }
+
+    public function makeListPage($activites) {
+        $title = "Liste des activités";
+
+        include_once("template/activite/lister.php");
+    }
+
+    public function makeErrorPage() {
+        $title = "Error";
+        $content = "Error";
+
+        include_once("template/activite/consulter.php");
+    }
+
+    public function makeActiviteCreationPage(BuilderActivite $builder, $update=false) {
+        $title = $update ? "Edition d'une activité" : "Création d'une activité";
+
+        $nomFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_NOM));
+        $lieuFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_LIEU));
+        $shortDescriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION));
+        $descriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION));
+        $errorDiv = $this->generateErrorDiv($builder->getError());
+
         $urlAction = $update ? $this->router->getActiviteModifURL($builder->getAttribute(BuilderActivite::FIELD_ID)) : $this->router->getActiviteCreationURL();
 
         include_once("template/activite/form.php");
@@ -59,7 +66,9 @@ class View {
 
     public function makeDeleteActivite($id) {
         $urlAction = $this->router->getActiviteSupprimerURL($id);
+        $title = "Confirmation de suppression";
 
         include_once("template/activite/delete.php");
     }
+
 }
