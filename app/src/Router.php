@@ -30,9 +30,11 @@ class Router {
             unset($_SESSION[Router::SESSION_FORM_URL]);
             unset($_SESSION[Router::SESSION_FORM]);
         }
-        
+
         $_SESSION["test"] = "coucou";
         $urlPath = explode("/", substr($_SERVER["PATH_INFO"], 1));
+        if(!empty($urlPath) && empty($urlPath[count($urlPath) - 1]))
+            unset($urlPath[count($urlPath) - 1]);
 
         if($urlPath[0] == "activite") {
             $ctrl = new Controller(new View(), new BDDActiviteStorage());
