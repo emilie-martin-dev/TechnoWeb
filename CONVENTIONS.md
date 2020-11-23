@@ -2,7 +2,7 @@
 
 L'utilisation du CamelCase est obligatoire.
 
-L'indentation se fait en utilisant des tabulations et non des espaces.
+L'indentation se fait en utilisant 4 espaces.
 
 De manière globale, tous les termes techniques doivent être en anglais (ex. "Controller").
 
