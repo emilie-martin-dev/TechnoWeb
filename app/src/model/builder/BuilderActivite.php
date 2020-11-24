@@ -1,6 +1,9 @@
 <?php
 
-class BuilderActivite {
+require_once("model/builder/AbstractBuilder.php");
+require_once("model/Activite.php");
+
+class BuilderActivite extends AbstractBuilder {
 
     const FIELD_ID = "ID"; 
     const FIELD_NOM = "NOM"; 
@@ -9,12 +12,8 @@ class BuilderActivite {
     const FIELD_DESCRIPTION = "DESCRIPTION"; 
     const FIELD_ID_UTILISATEUR = "ID_UTILISATEUR"; 
 
-    private $data;
-    private $error;
-
     public function __construct($data, $error = null) {
-        $this->data = $data;
-        $this->error = $error;
+        parent::__construct($data, $error);
     }
 
 	public static function buildFromActivite(Activite $activite) {
@@ -24,12 +23,12 @@ class BuilderActivite {
 			BuilderActivite::FIELD_LIEU => $activite->getLieu(),
 			BuilderActivite::FIELD_SHORT_DESCRIPTION => $activite->getShortDescription(),
 			BuilderActivite::FIELD_DESCRIPTION => $activite->getDescription(),
-			//BuilderActivite::FIELD_ID_UTILISATEUR => $activite->getUtilisateur(),
+			BuilderActivite::FIELD_ID_UTILISATEUR => $activite->getUtilisateur()->getId()
 		));
 	}
 
-    public function create($escape=false) {
-        if($this->data == null || $this->data != null && !$this->isValid())
+    public function create() {
+        if($this->data == null || $this->data != null && !$this->isValid()) 
             return null;
         
         $a = new Activite();
@@ -41,6 +40,7 @@ class BuilderActivite {
         $a->setLieu($this->data[BuilderActivite::FIELD_LIEU]);
         $a->setDescription($this->data[BuilderActivite::FIELD_SHORT_DESCRIPTION]);
         $a->setShortDescription($this->data[BuilderActivite::FIELD_SHORT_DESCRIPTION]);
+        $a->setUtilisateur(new Utilisateur($this->data[BuilderActivite::FIELD_ID_UTILISATEUR]));
 
         return $a;
     }
@@ -68,27 +68,11 @@ class BuilderActivite {
             $this->error[BuilderActivite::FIELD_DESCRIPTION] = "La description est obligatoire";
         }
 
-        /*if(!is_numeric($this->data[BuilderActivite::FIELD_ID_UTILISATEUR])) {
+        if(!is_numeric($this->data[BuilderActivite::FIELD_ID_UTILISATEUR])) {
             $this->error[BuilderActivite::FIELD_ID_UTILISATEUR] = "L'id de l'utilisateur est incorrect";
-        }*/
+        }
 
         return count($this->error) == 0;
-    }
-
-    public function getAttribute($name) {
-        return isset($this->data[$name]) ? $this->data[$name] : "";
-    }
-
-    public function setAttribute($name, $value) {
-       $this->data[$name] = $value;
-    }
-
-    public function getData() {
-        return $this->data;
-    }
-    
-    public function getError() {
-        return $this->error;
     }
 
 }

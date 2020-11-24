@@ -5,6 +5,7 @@ require_once("model/builder/BuilderActivite.php");
 require_once("Router.php");
 
 class View {
+
     protected $router;
     protected $feedback;
 
@@ -15,6 +16,13 @@ class View {
 
     public function escapeHtmlSpecialChars($str) {
         return htmlspecialchars($str, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5, 'UTF-8');
+    }
+
+    public function make404Page() {
+        $title = "Error";
+        $content = "Error";
+
+        include_once("template/activite/consulter.php");
     }
 
     public function generateErrorDiv($errors)  {
@@ -43,24 +51,16 @@ class View {
         include_once("template/activite/lister.php");
     }
 
-    public function makeErrorPage() {
-        $title = "Error";
-        $content = "Error";
-
-        include_once("template/activite/consulter.php");
-    }
-
-    public function makeActiviteCreationPage(BuilderActivite $builder, $update=false) {
+    public function makeActiviteFormPage(BuilderActivite $builder, $update=false) {
         $title = $update ? "Edition d'une activité" : "Création d'une activité";
+        $urlAction = $update ? $this->router->getActiviteModifURL($builder->getAttribute(BuilderActivite::FIELD_ID)) : $this->router->getActiviteCreationURL();
 
         $nomFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_NOM));
         $lieuFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_LIEU));
         $shortDescriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION));
         $descriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-
-        $urlAction = $update ? $this->router->getActiviteModifURL($builder->getAttribute(BuilderActivite::FIELD_ID)) : $this->router->getActiviteCreationURL();
-
+       
         include_once("template/activite/form.php");
     }
 
@@ -69,6 +69,16 @@ class View {
         $title = "Confirmation de suppression";
 
         include_once("template/activite/delete.php");
+    }
+
+    public function makeLoginFormPage(BuilderLogin $builder) {
+        $title = "Connexion";
+        $urlAction = $this->router->getLoginUrl();
+
+        $loginFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN));
+        $errorDiv = $this->generateErrorDiv($builder->getError());
+       
+        include_once("template/login/login.php");
     }
 
 }

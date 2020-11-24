@@ -1,5 +1,7 @@
 <?php
 
+require_once("model/Utilisateur.php");
+
 class Activite {
 
     private $id;
@@ -7,11 +9,10 @@ class Activite {
     private $lieu;
     private $description;
     private $shortDescription;
+    private $utilisateur;
 
-    public function __construct($id=-1, $nom="", $lieu="") {
+    public function __construct($id=-1) {
         $this->setId($id);
-        $this->setNom($nom);
-        $this->setLieu($lieu);
     }
 
     public function getId() {
@@ -52,6 +53,14 @@ class Activite {
 
     public function setShortDescription($shortDescription) {
         $this->shortDescription = $shortDescription;
+    }
+
+    public function getUtilisateur() {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(Utilisateur $utilisateur) {
+        $this->utilisateur = $utilisateur;
     }
 
 }

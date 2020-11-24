@@ -56,7 +56,7 @@ class BDDActiviteStorage implements IActiviteStorage {
         $sth->bindValue(":lieu", $a->getLieu());
         $sth->bindValue(":short_desc", $a->getShortDescription());
         $sth->bindValue(":desc", $a->getDescription());
-        $sth->bindValue(":id_utilisateur", 1, PDO::PARAM_INT);
+        $sth->bindValue(":id_utilisateur", $a->getUtilisateur()->getId(), PDO::PARAM_INT);
         
         $sth->execute();
         

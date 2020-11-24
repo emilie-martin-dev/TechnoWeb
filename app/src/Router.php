@@ -8,6 +8,7 @@ class Router {
 
     const SESSION_FORM_URL = "formUrl";
     const SESSION_FORM = "form";
+    const SESSION_FEEDBACK = "feedback";
 
     private static $instance = null;
 
@@ -31,13 +32,13 @@ class Router {
             unset($_SESSION[Router::SESSION_FORM]);
         }
 
-        $_SESSION["test"] = "coucou";
         $urlPath = explode("/", substr($_SERVER["PATH_INFO"], 1));
         if(!empty($urlPath) && empty($urlPath[count($urlPath) - 1]))
             unset($urlPath[count($urlPath) - 1]);
 
+        $ctrl = new Controller(new View($_SESSION[Router::SESSION_FEEDBACK]));
+
         if($urlPath[0] == "activite") {
-            $ctrl = new Controller(new View(), new BDDActiviteStorage());
             if(isset($urlPath[1]) && $urlPath[1] == "add" && $_SERVER["REQUEST_METHOD"] == "GET")
                 $ctrl->showAddActivite();
             elseif(isset($urlPath[1]) && $urlPath[1] == "add" && $_SERVER["REQUEST_METHOD"] == "POST")
@@ -54,13 +55,20 @@ class Router {
                 $ctrl->showInformation($urlPath[1]);
             else 
                 $ctrl->showList();
+        } elseif($urlPath[0] == "login") {
+            if($_SERVER["REQUEST_METHOD"] == "GET")
+                $ctrl->showLogin();
+            if($_SERVER["REQUEST_METHOD"] == "POST")
+                $ctrl->login($_POST);
+        } elseif($urlPath[0] == "logout") {
+            $ctrl->logout();
         } else {
             echo "404";
         }
     } 
 
     public function POSTredirect($url, $feedback="") {
-        $_SESSION['feedback'] = $feedback;
+        $_SESSION[Router::SESSION_FEEDBACK] = $feedback;
 
         header("Location: " . $url, true, 303);
     }
@@ -74,6 +82,10 @@ class Router {
         $_SESSION[Router::SESSION_FORM_URL] = $_SERVER["PATH_INFO"];
     }
 
+    public function getIndexURL() {
+        return "/";
+    }
+    
     public function getActiviteListURL() {
         return "/activite";
     }
@@ -94,4 +106,11 @@ class Router {
         return "/activite/" . $id . "/delete";
     }
 
+    public function getLoginURL() {
+        return "/login";
+    }
+
+    public function getLogoutURL() {
+        return "/logout";
+    }
 }
