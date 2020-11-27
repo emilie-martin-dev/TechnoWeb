@@ -27,11 +27,13 @@ class Router {
         session_name("ActivNormandie");
         session_start();
 
-        if(isset($_SESSION[Router::SESSION_LAST_URL]) && $_SESSION[Router::SESSION_LAST_URL] != $_SERVER["PATH_INFO"]) {
+        $pathInfo = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
+
+        if(isset($_SESSION[Router::SESSION_LAST_URL]) && $_SESSION[Router::SESSION_LAST_URL] != $pathInfo) {
             unset($_SESSION[Router::SESSION_FORM]);
         }
 
-        $_SESSION[Router::SESSION_LAST_URL] = $_SERVER["PATH_INFO"];
+        $_SESSION[Router::SESSION_LAST_URL] = $pathInfo;
 
         $feedback = isset($_SESSION[Router::SESSION_FEEDBACK]) ? $_SESSION[Router::SESSION_FEEDBACK] : null;
         unset($_SESSION[Router::SESSION_FEEDBACK]);
@@ -39,21 +41,21 @@ class Router {
         $ctrl = new Controller(new View($feedback));
 
         $urls = [
-            "GET:/activite" => array("showList", array(), array()),
-            "GET:/activite/[0-9]+" => array("showInformation", array("1"), array()),
+            "GET:/" => array("listActivites", array(), array()),
+            "GET:/activite" => array("listActivites", array(), array()),
+            "GET:/activite/[0-9]+" => array("showActivite", array("1"), array()),
             "GET:/activite/[0-9]+/add" => array("showAddActivite", array(), array()),
-            "POST:/activite/[0-9]+/add" => array("saveNewActivite", array($_POST), array()),
+            "POST:/activite/[0-9]+/add" => array("addActivite", array($_POST), array()),
             "GET:/activite/[0-9]+/delete" => array("showDeleteActivite", array("1"), array()),
             "POST:/activite/[0-9]+/delete" => array("deleteActivite", array("1"), array()),
             "GET:/activite/[0-9]+/update" => array("showUpdateActivite", array("1"), array()),
-            "POST:/activite/[0-9]+/update" => array("modifActivite", array("1", $_POST), array()),
+            "POST:/activite/[0-9]+/update" => array("updateActivite", array("1", $_POST), array()),
             "GET:/login" => array("showLogin", array(), array()),
-            "GET:/logout" => array("logout", array(), array()),
             "POST:/login" => array("login", array($_POST), array()),
-            "GET:/" => array("showList", array(), array())
+            "GET:/logout" => array("logout", array(), array())
         ];
 
-        $currentUrl = $_SERVER["REQUEST_METHOD"] . ":" . $_SERVER["PATH_INFO"];
+        $currentUrl = $_SERVER["REQUEST_METHOD"] . ":" . $pathInfo;
 
         $auth = new AuthenticationManager();
         $shown = false;
@@ -65,7 +67,7 @@ class Router {
                 $roles = $property[2];
 
                 if(empty($roles) || $auth->isConnected() && in_array($auth->getUser()->getRole()->getLibelle(), $roles)) {
-                    $methodArgs = $this->formatArgs($methodArgs, $this->parseUrl());
+                    $methodArgs = $this->formatArgs($methodArgs, $this->parseUrl($pathInfo));
 
                     call_user_func(array($ctrl, $methodToCall), ...$methodArgs);
                     $shown = true;
@@ -80,8 +82,8 @@ class Router {
         }
     } 
 
-    private function parseUrl() {
-        $urlPath = explode("/", substr($_SERVER["PATH_INFO"], 1));
+    private function parseUrl($pathinfo) {
+        $urlPath = explode("/", substr($pathinfo, 1));
         if(!empty($urlPath) && empty($urlPath[count($urlPath) - 1]))
             unset($urlPath[count($urlPath) - 1]);
 

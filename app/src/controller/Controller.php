@@ -18,7 +18,7 @@ class Controller {
         $this->router = Router::getInstance();
     }
 
-    public function showInformation($id) {
+    public function showActivite($id) {
         $activiteStorage = new BDDActiviteStorage();
 
         $activite = $activiteStorage->read($id);
@@ -29,10 +29,10 @@ class Controller {
             $this->view->make404Page();
     }
 
-    public function showList() {
+    public function listActivites() {
         $activiteStorage = new BDDActiviteStorage();
 
-        $this->view->makeListPage($activiteStorage->readAll());
+        $this->view->makeListActivitePage($activiteStorage->readAll());
     }
 
     public function showAddActivite() {
@@ -44,7 +44,7 @@ class Controller {
         $this->view->makeActiviteFormPage($builder);
     }
 
-    public function saveNewActivite(array $data) {
+    public function addActivite(array $data) {
         $activiteStorage = new BDDActiviteStorage();
 
         $builder = new BuilderActivite($data);
@@ -78,7 +78,7 @@ class Controller {
         $this->view->makeActiviteFormPage($builder, true);
     }
 
-    public function modifActivite($id, array $data) {
+    public function updateActivite($id, array $data) {
         $activiteStorage = new BDDActiviteStorage();
 
         $builder = new BuilderActivite($data);
@@ -100,7 +100,7 @@ class Controller {
         if($activiteStorage->read($id) == null)
             $this->view->make404Page();
         else
-            $this->view->makeDeleteActivite($id);
+            $this->view->makeDeleteActivitePage($id);
     }
 
     public function deleteActivite($id) {
@@ -121,7 +121,6 @@ class Controller {
     }
 
     public function login(array $data) {
-        var_dump($data);
         $builder = new BuilderLogin($data);
         if($builder->isValid()) {
             $authManager = new AuthenticationManager();

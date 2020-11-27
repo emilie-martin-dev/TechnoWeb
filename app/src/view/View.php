@@ -45,7 +45,7 @@ class View {
         include_once("template/activite/consulter.php");
     }
 
-    public function makeListPage($activites) {
+    public function makeListActivitePage($activites) {
         $title = "Liste des activités";
 
         include_once("template/activite/lister.php");
@@ -64,7 +64,7 @@ class View {
         include_once("template/activite/form.php");
     }
 
-    public function makeDeleteActivite($id) {
+    public function makeDeleteActivitePage($id) {
         $urlAction = $this->router->getActiviteSupprimerURL($id);
         $title = "Confirmation de suppression";
 
