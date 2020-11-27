@@ -18,7 +18,7 @@ class Controller {
         $this->router = Router::getInstance();
     }
 
-    public function showInformation(String $id) {
+    public function showInformation($id) {
         $activiteStorage = new BDDActiviteStorage();
 
         $activite = $activiteStorage->read($id);
@@ -53,10 +53,10 @@ class Controller {
         if($builder->isValid()) {
             $id = $activiteStorage->create($builder->create());
 
-            $this->router->POSTredirect($this->router->getActiviteURL($id), "Création réussie");
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
         } else {
             $this->router->setFormData($builder);
-            $this->router->POSTredirect($this->router->getActiviteCreationURL(), "Formulaire invalide");
+            $this->router->POSTRedirect($this->router->getActiviteCreationURL(), "Formulaire invalide");
         }
     }
 
@@ -82,13 +82,15 @@ class Controller {
         $activiteStorage = new BDDActiviteStorage();
 
         $builder = new BuilderActivite($data);
+        $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, 1);
+
         if($builder->isValid()) {
             $activiteStorage->update($id, $builder->create());
 
-            $this->router->POSTredirect($this->router->getActiviteURL($id), "Modfication réussie");
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Modfication réussie");
         } else {
             $this->router->setFormData($builder);
-            $this->router->POSTredirect($this->router->getActiviteModifURL($id), "Formulaire invalide");
+            $this->router->POSTRedirect($this->router->getActiviteModifURL($id), "Formulaire invalide");
         }
     }
 
@@ -106,7 +108,7 @@ class Controller {
 
         $activiteStorage->delete($id);
 
-        $this->router->POSTredirect($this->router->getActiviteListURL(), "Suppression réussie");
+        $this->router->POSTRedirect($this->router->getActiviteListURL(), "Suppression réussie");
     }
 
     public function showLogin() {
@@ -119,19 +121,20 @@ class Controller {
     }
 
     public function login(array $data) {
+        var_dump($data);
         $builder = new BuilderLogin($data);
         if($builder->isValid()) {
             $authManager = new AuthenticationManager();
 
             if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD))) {
                 $this->router->setFormData($builder);
-                $this->router->POSTredirect($this->router->getIndexURL(), "Connexion réussie");
+                $this->router->POSTRedirect($this->router->getIndexURL(), "Connexion réussie");
             } else {
-                $this->router->POSTredirect($this->router->getLoginURL(), "Le couple login / mot de passe est invalide");
+                $this->router->POSTRedirect($this->router->getLoginURL(), "Le couple login / mot de passe est invalide");
             }
         } else {
             $this->router->setFormData($builder);
-            $this->router->POSTredirect($this->router->getLoginURL(), "Formulaire invalide");
+            $this->router->POSTRedirect($this->router->getLoginURL(), "Formulaire invalide");
         }
     }
 
@@ -139,6 +142,6 @@ class Controller {
         $authManager = new AuthenticationManager();
         $authManager->disconnectUser();
 
-        $this->router->POSTredirect($this->router->getIndexURL(), "Déconnexion réussie");
+        $this->router->POSTRedirect($this->router->getIndexURL(), "Déconnexion réussie");
     }
 }

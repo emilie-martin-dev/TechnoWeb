@@ -27,8 +27,6 @@ class BDDUtilisateurStorage implements IUtilisateurStorage {
         $builder = new BuilderUtilisateur($data); 
         $utilisateur = $builder->create();
 
-        var_dump($utilisateur);
-
         if($utilisateur == null || !password_verify($password, $utilisateur->getPassword()))
             return null;
         

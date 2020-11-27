@@ -22,7 +22,7 @@ class BDDRoleStorage implements IRoleStorage {
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
         $sth->execute();
         
-        $builder = new BuilderActivite($sth->fetch(PDO::FETCH_ASSOC)); 
+        $builder = new BuilderRole($sth->fetch(PDO::FETCH_ASSOC)); 
             
         return $builder->create();
     }

@@ -16,7 +16,6 @@ class AuthenticationManager {
 		$user = $utilisateurStorage->checkAuth($login, $password);
 		if($user == null)
 			return false;
-
 		
 		$roleStorage = new BDDRoleStorage();
 		$user->setRole($roleStorage->read($user->getRole()->getId()));
