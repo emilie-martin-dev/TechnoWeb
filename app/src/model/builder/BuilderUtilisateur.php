@@ -6,12 +6,12 @@ require_once("model/Role.php");
 
 class BuilderUtilisateur extends AbstractBuilder {
 
-    const FIELD_ID = "ID"; 
-    const FIELD_NOM = "NOM"; 
-    const FIELD_PRENOM = "PRENOM"; 
-    const FIELD_LOGIN = "LOGIN"; 
-    const FIELD_PASSWORD = "PASSWORD"; 
-    const FIELD_ID_ROLE = "ID_ROLE"; 
+    const FIELD_ID = "ID";
+    const FIELD_NOM = "NOM";
+    const FIELD_PRENOM = "PRENOM";
+    const FIELD_LOGIN = "LOGIN";
+    const FIELD_PASSWORD = "PASSWORD";
+    const FIELD_ID_ROLE = "ID_ROLE";
 
     public function __construct($data, $error = null) {
         parent::__construct($data, $error);
@@ -28,15 +28,13 @@ class BuilderUtilisateur extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid())
-            return null;
-        
+    public function createModel() {
+
         $u = new Utilisateur();
-        
+
         if(isset($this->data[BuilderUtilisateur::FIELD_ID]))
             $u->setId($this->data[BuilderUtilisateur::FIELD_ID]);
-            
+
         $u->setNom($this->data[BuilderUtilisateur::FIELD_NOM]);
         $u->setPrenom($this->data[BuilderUtilisateur::FIELD_PRENOM]);
         $u->setLogin($this->data[BuilderUtilisateur::FIELD_LOGIN]);
@@ -45,14 +43,14 @@ class BuilderUtilisateur extends AbstractBuilder {
 
         return $u;
     }
-    
+
     public function isValid() {
         $this->error = array();
 
         if(isset($this->data[BuilderUtilisateur::FIELD_ID]) && !is_numeric($this->data[BuilderUtilisateur::FIELD_ID])) {
             $this->error[BuilderUtilisateur::FIELD_ID] = "La valeur de l'id est incorrect";
         }
-        
+
         if(empty($this->data[BuilderUtilisateur::FIELD_NOM])) {
             $this->error[BuilderUtilisateur::FIELD_NOM] = "Le nom est obligatoire";
         }
