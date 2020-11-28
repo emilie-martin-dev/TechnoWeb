@@ -7,13 +7,8 @@ class BDDActiviteStorage implements IActiviteStorage {
 
     private $bdd;
 
-    public function __construct() {
-        try {
-            $this->bdd = new PDO('mysql:host='.BDD_HOST.':'.BDD_PORT.';dbname='.BDD_NAME, BDD_USER, BDD_PASSWORD);
-        } catch (PDOException $e) {
-            echo "Erreur !: " . $e->getMessage();
-            die();
-        }
+    public function __construct($bdd) {
+        $this->bdd = $bdd;
     }
 
     public function read($id) {

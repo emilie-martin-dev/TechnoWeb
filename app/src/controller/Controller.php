@@ -13,13 +13,16 @@ class Controller {
     protected $view;
     protected $router;
 
-    public function __construct(View $view) {
+    protected $bdd;
+
+    public function __construct(View $view, $bdd) {
         $this->view = $view;
         $this->router = Router::getInstance();
+        $this->bdd = $bdd;
     }
 
     public function showActivite($id) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $activite = $activiteStorage->read($id);
 
@@ -30,7 +33,7 @@ class Controller {
     }
 
     public function listActivites() {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $this->view->makeListActivitePage($activiteStorage->readAll());
     }
@@ -45,7 +48,7 @@ class Controller {
     }
 
     public function addActivite(array $data) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, 1);
@@ -61,7 +64,7 @@ class Controller {
     }
 
     public function showUpdateActivite($id) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $builder = $this->router->getFormData();
         if($builder == null) {
@@ -79,7 +82,7 @@ class Controller {
     }
 
     public function updateActivite($id, array $data) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, 1);
@@ -95,7 +98,7 @@ class Controller {
     }
 
     public function showDeleteActivite($id) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         if($activiteStorage->read($id) == null)
             $this->view->make404Page();
@@ -104,7 +107,7 @@ class Controller {
     }
 
     public function deleteActivite($id) {
-        $activiteStorage = new BDDActiviteStorage();
+        $activiteStorage = new BDDActiviteStorage($this->bdd);
 
         $activiteStorage->delete($id);
 
@@ -125,7 +128,7 @@ class Controller {
         if($builder->isValid()) {
             $authManager = new AuthenticationManager();
 
-            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD))) {
+            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD), $this->bdd)) {
                 $this->router->setFormData($builder);
                 $this->router->POSTRedirect($this->router->getIndexURL(), "Connexion réussie");
             } else {

@@ -10,14 +10,14 @@ class AuthenticationManager {
     public function __construct() {
     }
 
-    public function connectUser($login, $password) {		
-        $utilisateurStorage = new BDDUtilisateurStorage();
+    public function connectUser($login, $password, $bdd) {		
+        $utilisateurStorage = new BDDUtilisateurStorage($bdd);
 		
 		$user = $utilisateurStorage->checkAuth($login, $password);
 		if($user == null)
 			return false;
 		
-		$roleStorage = new BDDRoleStorage();
+		$roleStorage = new BDDRoleStorage($bdd);
 		$user->setRole($roleStorage->read($user->getRole()->getId()));
 		
 		$this->setUser($user);

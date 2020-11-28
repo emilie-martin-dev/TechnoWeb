@@ -27,6 +27,16 @@ class Router {
         session_name("ActivNormandie");
         session_start();
 
+        $bdd = null;
+        try {
+            $bdd = new PDO('mysql:host='.BDD_HOST.':'.BDD_PORT.';dbname='.BDD_NAME, BDD_USER, BDD_PASSWORD);
+        } catch (PDOException $e) {
+            echo "Erreur !: " . $e->getMessage();
+            die();
+        }
+
+        $sth = $bdd->prepare("SELECT * FROM ACTIVITE WHERE ID = :id");
+
         $pathInfo = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
 
         if(isset($_SESSION[Router::SESSION_LAST_URL]) && $_SESSION[Router::SESSION_LAST_URL] != $pathInfo) {
@@ -38,7 +48,7 @@ class Router {
         $feedback = isset($_SESSION[Router::SESSION_FEEDBACK]) ? $_SESSION[Router::SESSION_FEEDBACK] : null;
         unset($_SESSION[Router::SESSION_FEEDBACK]);
 
-        $ctrl = new Controller(new View($feedback));
+        $ctrl = new Controller(new View($feedback), $bdd);
 
         $urls = [
             "GET:/" => array("listActivites", array(), array()),
