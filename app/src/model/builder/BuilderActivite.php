@@ -38,7 +38,7 @@ class BuilderActivite extends AbstractBuilder {
             
         $a->setNom($this->data[BuilderActivite::FIELD_NOM]);
         $a->setLieu($this->data[BuilderActivite::FIELD_LIEU]);
-        $a->setDescription($this->data[BuilderActivite::FIELD_SHORT_DESCRIPTION]);
+        $a->setDescription($this->data[BuilderActivite::FIELD_DESCRIPTION]);
         $a->setShortDescription($this->data[BuilderActivite::FIELD_SHORT_DESCRIPTION]);
         $a->setUtilisateur(new Utilisateur($this->data[BuilderActivite::FIELD_ID_UTILISATEUR]));
 

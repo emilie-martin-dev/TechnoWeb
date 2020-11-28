@@ -90,7 +90,6 @@ td {
 .form-center {
     display: block;
     margin: auto;
-    width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 16px;
 }
@@ -99,19 +98,30 @@ td {
     text-align: center;
 }
 
-.form-center input, .form-center label {
+.form-center input, 
+.form-center label,
+.form-center textarea {
     display: block;
     width: 100%;
     box-sizing:border-box;
 }
 
-.form-center input {
+.form-center input,
+.form-center textarea {
     margin-bottom: 1em;
 }
 
 .form-center input[type="submit"] {
     width: auto;
     margin-left: auto;
+}
+
+.form-center textarea:not(.big-textarea) {
+    height: 7em;
+}
+
+.big-textarea {
+    height: 40em;
 }
 
 .feedback {

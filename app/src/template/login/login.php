@@ -4,7 +4,7 @@
 
 <?= $errorDiv?>
 
-<form class="form-center" action="<?= $urlAction?>" method="POST">
+<form class="form-center w6" action="<?= $urlAction?>" method="POST">
     <h2>Connexion</h2>
     <label for="<?= BuilderUtilisateur::FIELD_LOGIN?>">Login</label>
     <input name="<?= BuilderUtilisateur::FIELD_LOGIN?>" placeholder="Login" id="<?= BuilderUtilisateur::FIELD_LOGIN?>" value="<?= $loginFieldValue?>"/>
