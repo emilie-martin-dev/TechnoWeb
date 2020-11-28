@@ -28,7 +28,7 @@ class View {
     public function generateErrorDiv($errors)  {
         $errorDiv = "";
         if($errors != null && count($errors) > 0) {
-            $errorDiv .= "<div><ul>";
+            $errorDiv .= "<div class=\"error-block\"><ul>";
             foreach($errors as $e) {
                 $errorDiv .= "<li>" . $e . "</li>";
             }
@@ -42,8 +42,8 @@ class View {
         $feedbackDiv = "";
 
         if(!empty($this->feedback)) {
-            $feedbackDiv .= "<div class=\"row\">";
-            $feedbackDiv .= "<p>" . $this->feedback . "<p>";
+            $feedbackDiv .= "<div class=\"feedback\">";
+            $feedbackDiv .= "<p>" . $this->feedback . "</p>";
             $feedbackDiv .= "</div>";
             
         }

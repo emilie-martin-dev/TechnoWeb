@@ -114,6 +114,26 @@ td {
     margin-left: auto;
 }
 
+.feedback {
+    display: block;
+    background-color: rgb(137, 207, 224);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 1em;
+}
+
+.feedback p {
+    margin: 0 1em 0 1em;
+}
+
 .error-block {
+    display: block;
     background-color: rgb(243, 72, 72);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+.error-block ul {
+    margin-top: 0;
+    margin-bottom: 0;
 }

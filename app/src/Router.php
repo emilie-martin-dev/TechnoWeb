@@ -27,6 +27,7 @@ class Router {
 
         if(isset($_SESSION[SESSION_LAST_URL]) && $_SESSION[SESSION_LAST_URL] != $pathInfo) {
             unset($_SESSION[SESSION_FORM]);
+            unset($_SESSION[SESSION_FEEDBACK]);
         }
 
         $_SESSION[SESSION_LAST_URL] = $pathInfo;
@@ -65,7 +66,6 @@ class Router {
         }
 
         $feedback = isset($_SESSION[SESSION_FEEDBACK]) ? $_SESSION[SESSION_FEEDBACK] : null;
-        unset($_SESSION[SESSION_FEEDBACK]);
 
         return new Controller(new View($feedback), $bdd);
     }
