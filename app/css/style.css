@@ -62,3 +62,18 @@
 .w12 {
     width: 100%;
 }
+
+table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: rgb(248, 200, 156);
+}
+
+td {
+    border: 1px solid black;
+    margin: 0;
+}

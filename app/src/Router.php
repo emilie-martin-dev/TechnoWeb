@@ -46,6 +46,7 @@ class Router {
 
         $urls = [
             "GET:/" => array("listActivites", array(), array()),
+            "GET:/about" => array("about", array(), array()),
             "GET:/activite" => array("listActivites", array(), array()),
             "GET:/activite/[0-9]+" => array("showActivite", array("1"), array()),
             "GET:/activite/add" => array("showAddActivite", array(), array()),

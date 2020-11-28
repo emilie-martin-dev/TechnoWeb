@@ -21,6 +21,10 @@ class Controller {
         $this->bdd = $bdd;
     }
 
+    public function about() {
+        $this->view->makeAboutPage();
+    }
+
     public function showActivite($id) {
         $activiteStorage = new BDDActiviteStorage($this->bdd);
 

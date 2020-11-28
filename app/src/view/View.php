@@ -51,6 +51,12 @@ class View {
         return $feedbackDiv;
     }
 
+    public function makeAboutPage() {
+        $title = "A propos";
+
+        include_once("template/about/about.php");
+    }
+
     public function makeActivitePage(Activite $activite) {
         $title = $activite->getNom();
         $content = $activite->getLieu();
