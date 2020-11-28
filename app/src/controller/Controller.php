@@ -39,6 +39,11 @@ class Controller {
     }
 
     public function showAddActivite() {
+        $authManager = new AuthenticationManager();
+        if(!$authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->get404URL());
+        }
+
         $builder = $this->router->getFormData();
         if($builder == null) {
             $builder = new BuilderActivite(array());
@@ -48,17 +53,24 @@ class Controller {
     }
 
     public function addActivite(array $data) {
+        $authManager = new AuthenticationManager();
+        if(!$authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->get404URL());
+        }
+
         $builder = new BuilderActivite($data);
-        $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, 1);
+        $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
         
         if($builder->isValid()) {
             $activiteStorage = new BDDActiviteStorage($this->bdd);
             $id = $activiteStorage->create($builder->create());
 
             $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
+            return;
         } else {
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteCreationURL(), "Formulaire invalide");
+            return;
         }
     }
 
@@ -98,7 +110,7 @@ class Controller {
         }
         
         $builder = new BuilderActivite($data);
-        $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, 1);
+        $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $activite->getUtilisateur()->getId());
 
         if($builder->isValid()) {
             $activiteStorage->update($id, $builder->create());
@@ -151,12 +163,15 @@ class Controller {
             if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD), $this->bdd)) {
                 $this->router->setFormData($builder);
                 $this->router->POSTRedirect($this->router->getIndexURL(), "Connexion réussie");
+                return;
             } else {
                 $this->router->POSTRedirect($this->router->getLoginURL(), "Le couple login / mot de passe est invalide");
+                return;
             }
         } else {
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getLoginURL(), "Formulaire invalide");
+            return;
         }
     }
 
