@@ -5,8 +5,6 @@ require_once("storage/bdd/BDDUtilisateurStorage.php");
 
 class AuthenticationManager {
 
-    const SESSION_USER = "USER";
-
     public function __construct() {
     }
 
@@ -45,10 +43,10 @@ class AuthenticationManager {
 	}
 
     public function getUser() {
-        return isset($_SESSION["USER"]) ? $_SESSION[AuthenticationManager::SESSION_USER] : null;
+        return isset($_SESSION["USER"]) ? $_SESSION[SESSION_USER] : null;
     }
 
     public function setUser($utilisateur) {
-        $_SESSION[AuthenticationManager::SESSION_USER] = $utilisateur;
+        $_SESSION[SESSION_USER] = $utilisateur;
     }
 }

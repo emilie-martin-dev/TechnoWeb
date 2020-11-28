@@ -6,10 +6,6 @@ require_once("storage/bdd/BDDActiviteStorage.php");
 
 class Router {
 
-    const SESSION_LAST_URL = "lastUrl";
-    const SESSION_FORM = "form";
-    const SESSION_FEEDBACK = "feedback";
-
     private static $instance = null;
 
     private function __construct() {
@@ -39,14 +35,14 @@ class Router {
 
         $pathInfo = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
 
-        if(isset($_SESSION[Router::SESSION_LAST_URL]) && $_SESSION[Router::SESSION_LAST_URL] != $pathInfo) {
-            unset($_SESSION[Router::SESSION_FORM]);
+        if(isset($_SESSION[SESSION_LAST_URL]) && $_SESSION[SESSION_LAST_URL] != $pathInfo) {
+            unset($_SESSION[SESSION_FORM]);
         }
 
-        $_SESSION[Router::SESSION_LAST_URL] = $pathInfo;
+        $_SESSION[SESSION_LAST_URL] = $pathInfo;
 
-        $feedback = isset($_SESSION[Router::SESSION_FEEDBACK]) ? $_SESSION[Router::SESSION_FEEDBACK] : null;
-        unset($_SESSION[Router::SESSION_FEEDBACK]);
+        $feedback = isset($_SESSION[SESSION_FEEDBACK]) ? $_SESSION[SESSION_FEEDBACK] : null;
+        unset($_SESSION[SESSION_FEEDBACK]);
 
         $ctrl = new Controller(new View($feedback), $bdd);
 
@@ -111,17 +107,17 @@ class Router {
     }
 
     public function POSTRedirect($url, $feedback="") {
-        $_SESSION[Router::SESSION_FEEDBACK] = $feedback;
+        $_SESSION[SESSION_FEEDBACK] = $feedback;
 
         header("Location: " . $url, true, 303);
     }
 
     public function getFormData() {
-        return (isset($_SESSION[Router::SESSION_FORM])) ? $_SESSION[Router::SESSION_FORM] : null;
+        return (isset($_SESSION[SESSION_FORM])) ? $_SESSION[SESSION_FORM] : null;
     }
 
     public function setFormData($formData) {
-        $_SESSION[Router::SESSION_FORM] = $formData;
+        $_SESSION[SESSION_FORM] = $formData;
     }
 
     public function isUrl($url, $urlRequested) {
