@@ -38,6 +38,19 @@ class View {
         return $errorDiv;
     }
 
+    public function generateFeedbackDiv() {
+        $feedbackDiv = "";
+
+        if(!empty($this->feedback)) {
+            $feedbackDiv .= "<div class=\"row\">";
+            $feedbackDiv .= "<p>" . $this->feedback . "<p>";
+            $feedbackDiv .= "</div>";
+            
+        }
+
+        return $feedbackDiv;
+    }
+
     public function makeActivitePage(Activite $activite) {
         $title = $activite->getNom();
         $content = $activite->getLieu();
