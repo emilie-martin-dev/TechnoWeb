@@ -2,6 +2,8 @@
 
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
+require_once("model/builder/BuilderUtilisateur.php");
+require_once("model/builder/BuilderLogin.php");
 require_once("Router.php");
 
 class View {

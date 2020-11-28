@@ -57,17 +57,9 @@ class Router {
     } 
 
     private function generateControler() {
-        $bdd = null;
-        try {
-            $bdd = new PDO('mysql:host='.BDD_HOST.':'.BDD_PORT.';dbname='.BDD_NAME, BDD_USER, BDD_PASSWORD);
-        } catch (PDOException $e) {
-            echo "Erreur !: " . $e->getMessage();
-            die();
-        }
-
         $feedback = isset($_SESSION[SESSION_FEEDBACK]) ? $_SESSION[SESSION_FEEDBACK] : null;
 
-        return new Controller(new View($feedback), $bdd);
+        return new Controller(new View($feedback));
     }
 
     private function router($urls, $ctrl) {

@@ -1,21 +1,21 @@
 <?php
 
-require_once("storage/bdd/BDDRoleStorage.php");
-require_once("storage/bdd/BDDUtilisateurStorage.php");
+require_once("storage/StorageFactory.php");
 
 class AuthenticationManager {
 
     public function __construct() {
     }
 
-    public function connectUser($login, $password, $bdd) {		
-        $utilisateurStorage = new BDDUtilisateurStorage($bdd);
+    public function connectUser($login, $password) {		
+        $factory = StorageFactory::getInstance();		
+        $utilisateurStorage = $factory->getUtilisateurStorage();
 		
 		$user = $utilisateurStorage->checkAuth($login, $password);
 		if($user == null)
 			return false;
 		
-		$roleStorage = new BDDRoleStorage($bdd);
+		$roleStorage = $factory->getRoleStorage();
 		$user->setRole($roleStorage->read($user->getRole()->getId()));
 		
 		$this->setUser($user);

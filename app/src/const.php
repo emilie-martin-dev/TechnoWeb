@@ -9,3 +9,6 @@ define("SESSION_LAST_URL", "LAST_URL");
 define("SESSION_FORM", "FORM");
 define("SESSION_FEEDBACK", "FEEDBACK");
 define("SESSION_USER", "USER");
+
+define("STORAGE_BDD", 0);
+define("STORAGE_STUB", 1);

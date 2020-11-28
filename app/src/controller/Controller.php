@@ -1,11 +1,10 @@
 <?php
 
+require_once("AuthenticationManager.php");
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
 require_once("model/builder/BuilderLogin.php");
-require_once("storage/bdd/BDDActiviteStorage.php");
-require_once("storage/bdd/BDDUtilisateurStorage.php");
-require_once("AuthenticationManager.php");
+require_once("storage/StorageFactory.php");
 require_once("view/View.php");
 
 class Controller {
@@ -13,12 +12,9 @@ class Controller {
     protected $view;
     protected $router;
 
-    protected $bdd;
-
-    public function __construct(View $view, $bdd) {
+    public function __construct(View $view) {
         $this->view = $view;
         $this->router = Router::getInstance();
-        $this->bdd = $bdd;
     }
 
     public function about() {
@@ -26,7 +22,8 @@ class Controller {
     }
 
     public function showActivite($id) {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
 
         $activite = $activiteStorage->read($id);
 
@@ -37,7 +34,8 @@ class Controller {
     }
 
     public function listActivites() {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
 
         $this->view->makeListActivitePage($activiteStorage->readAll());
     }
@@ -66,7 +64,8 @@ class Controller {
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
         
         if($builder->isValid()) {
-            $activiteStorage = new BDDActiviteStorage($this->bdd);
+            $factory = StorageFactory::getInstance();
+            $activiteStorage = $factory->getActiviteStorage();
             $id = $activiteStorage->create($builder->create());
 
             $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
@@ -88,7 +87,9 @@ class Controller {
     }
 
     public function showUpdateActivite($id) {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
         $activite = $activiteStorage->read($id);
 
         if(!$this->isUserActivityOwner($activite)) {
@@ -105,7 +106,9 @@ class Controller {
     }
 
     public function updateActivite($id, array $data) {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
         $activite = $activiteStorage->read($id);
 
         if(!$this->isUserActivityOwner($activite)) {
@@ -126,7 +129,9 @@ class Controller {
     }
 
     public function showDeleteActivite($id) {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
         $activite = $activiteStorage->read($id);
 
         if(!$this->isUserActivityOwner($activite)) {
@@ -138,7 +143,9 @@ class Controller {
     }
 
     public function deleteActivite($id) {
-        $activiteStorage = new BDDActiviteStorage($this->bdd);
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
         $activite = $activiteStorage->read($id);
 
         if(!$this->isUserActivityOwner($activite)) {
@@ -164,7 +171,7 @@ class Controller {
         if($builder->isValid()) {
             $authManager = new AuthenticationManager();
 
-            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD), $this->bdd)) {
+            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD))) {
                 $this->router->setFormData($builder);
                 $this->router->POSTRedirect($this->router->getIndexURL(), "Connexion réussie");
                 return;
