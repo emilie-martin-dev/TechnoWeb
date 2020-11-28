@@ -27,7 +27,7 @@ class AuthenticationManager {
 		return $this->getUser() != null;
 	}
 	
-	public function isAdminConnected() {
+	public function isAdmin() {
 		return $this->isConnected() && $this->getUser()->getRole()->getLibelle() == ROLE_ADMIN;
 	}
 	

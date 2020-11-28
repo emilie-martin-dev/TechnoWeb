@@ -31,8 +31,6 @@ class Router {
             die();
         }
 
-        $sth = $bdd->prepare("SELECT * FROM ACTIVITE WHERE ID = :id");
-
         $pathInfo = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
 
         if(isset($_SESSION[SESSION_LAST_URL]) && $_SESSION[SESSION_LAST_URL] != $pathInfo) {
@@ -126,6 +124,10 @@ class Router {
 
     public function getIndexURL() {
         return "/";
+    }
+    
+    public function get404URL() {
+        return "/404";
     }
     
     public function getActiviteListURL() {
