@@ -23,6 +23,39 @@ class Router {
         session_name("ActivNormandie");
         session_start();
 
+        $pathInfo = $this->getCurrentURL();
+
+        if(isset($_SESSION[SESSION_LAST_URL]) && $_SESSION[SESSION_LAST_URL] != $pathInfo) {
+            unset($_SESSION[SESSION_FORM]);
+        }
+
+        $_SESSION[SESSION_LAST_URL] = $pathInfo;
+
+        $urls = [
+            "GET:/" => array("listActivites", array(), array()),
+            "GET:/about" => array("about", array(), array()),
+            "GET:/activite" => array("listActivites", array(), array()),
+            "GET:/activite/[0-9]+" => array("showActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/activite/add" => array("showAddActivite", array(), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/activite/add" => array("addActivite", array($_POST), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/activite/[0-9]+/delete" => array("showDeleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/activite/[0-9]+/delete" => array("deleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/activite/[0-9]+/update" => array("showUpdateActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/activite/[0-9]+/update" => array("updateActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/login" => array("showLogin", array(), array()),
+            "POST:/login" => array("login", array($_POST), array()),
+            "GET:/logout" => array("logout", array(), array())
+        ];
+
+        $ctrl = $this->generateControler();
+        $this->router($urls, $ctrl);  
+    } 
+
+    private function getCurrentURL() {
+        return isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
+    } 
+
+    private function generateControler() {
         $bdd = null;
         try {
             $bdd = new PDO('mysql:host='.BDD_HOST.':'.BDD_PORT.';dbname='.BDD_NAME, BDD_USER, BDD_PASSWORD);
@@ -31,35 +64,14 @@ class Router {
             die();
         }
 
-        $pathInfo = isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
-
-        if(isset($_SESSION[SESSION_LAST_URL]) && $_SESSION[SESSION_LAST_URL] != $pathInfo) {
-            unset($_SESSION[SESSION_FORM]);
-        }
-
-        $_SESSION[SESSION_LAST_URL] = $pathInfo;
-
         $feedback = isset($_SESSION[SESSION_FEEDBACK]) ? $_SESSION[SESSION_FEEDBACK] : null;
         unset($_SESSION[SESSION_FEEDBACK]);
 
-        $ctrl = new Controller(new View($feedback), $bdd);
+        return new Controller(new View($feedback), $bdd);
+    }
 
-        $urls = [
-            "GET:/" => array("listActivites", array(), array()),
-            "GET:/about" => array("about", array(), array()),
-            "GET:/activite" => array("listActivites", array(), array()),
-            "GET:/activite/[0-9]+" => array("showActivite", array("1"), array()),
-            "GET:/activite/add" => array("showAddActivite", array(), array()),
-            "POST:/activite/add" => array("addActivite", array($_POST), array()),
-            "GET:/activite/[0-9]+/delete" => array("showDeleteActivite", array("1"), array()),
-            "POST:/activite/[0-9]+/delete" => array("deleteActivite", array("1"), array()),
-            "GET:/activite/[0-9]+/update" => array("showUpdateActivite", array("1"), array()),
-            "POST:/activite/[0-9]+/update" => array("updateActivite", array("1", $_POST), array()),
-            "GET:/login" => array("showLogin", array(), array()),
-            "POST:/login" => array("login", array($_POST), array()),
-            "GET:/logout" => array("logout", array(), array())
-        ];
-
+    private function router($urls, $ctrl) {
+        $pathInfo = $this->getCurrentURL();
         $currentUrl = $_SERVER["REQUEST_METHOD"] . ":" . $pathInfo;
 
         $auth = new AuthenticationManager();
@@ -76,16 +88,16 @@ class Router {
 
                     call_user_func(array($ctrl, $methodToCall), ...$methodArgs);
                     $shown = true;
-    
-                    break;
                 }
+            
+                break;
             }
         }
 
         if(!$shown) {
             echo "404";
         }
-    } 
+    }
 
     private function parseUrl($pathinfo) {
         $urlPath = explode("/", substr($pathinfo, 1));
@@ -117,10 +129,6 @@ class Router {
 
     public function setFormData($formData) {
         $_SESSION[SESSION_FORM] = $formData;
-    }
-
-    public function isUrl($url, $urlRequested) {
-        
     }
 
     public function getIndexURL() {
