@@ -77,3 +77,43 @@ td {
     border: 1px solid black;
     margin: 0;
 }
+
+.center {
+    margin: auto;
+    display: block;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.form-center {
+    display: block;
+    margin: auto;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 16px;
+}
+
+.form-center h2 {
+    text-align: center;
+}
+
+.form-center input, .form-center label {
+    display: block;
+    width: 100%;
+    box-sizing:border-box;
+}
+
+.form-center input {
+    margin-bottom: 1em;
+}
+
+.form-center input[type="submit"] {
+    width: auto;
+    margin-left: auto;
+}
+
+.error-block {
+    background-color: rgb(243, 72, 72);
+}
