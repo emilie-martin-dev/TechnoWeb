@@ -1,5 +1,6 @@
 <?php
 
+require_once("auth/AuthenticationManager.php");
 require_once("controller/Controller.php");
 require_once("view/View.php");
 require_once("storage/bdd/BDDActiviteStorage.php");
@@ -43,6 +44,8 @@ class Router {
             "POST:/activite/[0-9]+/delete" => array("deleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/activite/[0-9]+/update" => array("showUpdateActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
             "POST:/activite/[0-9]+/update" => array("updateActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/activite/[0-9]+/upload" => array("showUploadPictureActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/activite/[0-9]+/upload" => array("uploadPictureActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/login" => array("showLogin", array(), array()),
             "POST:/login" => array("login", array($_POST), array()),
             "GET:/logout" => array("logout", array(), array())
@@ -145,6 +148,10 @@ class Router {
 
     public function getActiviteModifURL($id) {
         return "/activite/" . $id . "/update";
+    }
+
+    public function getActiviteUploadPictureURL($id) {
+        return "/activite/" . $id . "/upload";
     }
 
     public function getActiviteSupprimerURL($id) {
