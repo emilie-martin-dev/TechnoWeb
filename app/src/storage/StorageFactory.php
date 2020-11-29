@@ -2,6 +2,7 @@
 
 require_once("storage/bdd/BDDActiviteStorage.php");
 require_once("storage/bdd/BDDRoleStorage.php");
+require_once("storage/bdd/BDDPhotoStorage.php");
 require_once("storage/bdd/BDDUtilisateurStorage.php");
 
 class StorageFactory {
@@ -43,6 +44,20 @@ class StorageFactory {
             return new BDDActiviteStorage($this->getBdd());
         } elseif($store == STORAGE_STUB) {
             return new StubActiviteStorage();
+        } else {
+            echo "Storage activité en " . $store . " non disponible";
+            die();
+        }
+    }
+
+    public function getPhotoStorage($storageType=null) {
+        $store = ($storageType != null) ? $storageType : $this->storageType;
+
+        if($store == STORAGE_BDD) {
+            return new BDDPhotoStorage($this->getBdd());
+        } elseif($store == STORAGE_STUB) {
+            echo "Storage photo en " . $store . " non disponible";
+            die();
         } else {
             echo "Storage activité en " . $store . " non disponible";
             die();

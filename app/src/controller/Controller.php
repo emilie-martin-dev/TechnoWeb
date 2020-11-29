@@ -1,10 +1,11 @@
 <?php
 
-require_once("AuthenticationManager.php");
+require_once("auth/AuthenticationManager.php");
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
 require_once("model/builder/BuilderLogin.php");
 require_once("storage/StorageFactory.php");
+require_once("utils/PhotoUploader.php");
 require_once("view/View.php");
 
 class Controller {
@@ -44,6 +45,7 @@ class Controller {
         $authManager = new AuthenticationManager();
         if(!$authManager->isConnected()) {
             $this->router->POSTRedirect($this->router->get404URL());
+            return;
         }
 
         $builder = $this->router->getFormData();
@@ -58,6 +60,7 @@ class Controller {
         $authManager = new AuthenticationManager();
         if(!$authManager->isConnected()) {
             $this->router->POSTRedirect($this->router->get404URL());
+            return;
         }
 
         $builder = new BuilderActivite($data);
@@ -125,6 +128,55 @@ class Controller {
         } else {
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteModifURL($id), "Formulaire invalide");
+        }
+    }
+
+    public function showUploadPictureActivite($id) {
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
+        $activite = $activiteStorage->read($id);
+
+        if(!$this->isUserActivityOwner($activite)) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $this->view->makeUploadPictureActivite($id);
+    }
+    
+    public function uploadPictureActivite($id) {
+        $factory = StorageFactory::getInstance();
+        $activiteStorage = $factory->getActiviteStorage();
+
+        $activite = $activiteStorage->read($id);
+
+        if(!$this->isUserActivityOwner($activite)) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $photoUploader = new PhotoUploader($_FILES["file"]);
+        if(!$photoUploader->isValid() || !$photoUploader->save()) { 
+            $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), $photoUploader->getError());
+            return;
+        }
+
+        $builder = new BuilderPhoto(array());
+        $builder->setAttribute(BuilderPhoto::FIELD_CHEMIN, $photoUploader->getFileName());
+        $builder->setAttribute(BuilderPhoto::FIELD_ID_ACTIVITE, $id);
+
+        if($builder->isValid()) {
+            $factory = StorageFactory::getInstance();
+            $photoStorage = $factory->getPhotoStorage();
+            $photoStorage->create($builder->create());
+
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Image uploadé avec succès");
+            return;
+        } else {
+            $this->router->setFormData($builder);                
+            $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), "Un problème est survenue lors de l'upload");
+            return;
         }
     }
 

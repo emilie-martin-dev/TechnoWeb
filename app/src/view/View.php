@@ -47,7 +47,6 @@ class View {
             $feedbackDiv .= "<div class=\"feedback\">";
             $feedbackDiv .= "<p>" . $this->feedback . "</p>";
             $feedbackDiv .= "</div>";
-            
         }
 
         return $feedbackDiv;
@@ -83,6 +82,13 @@ class View {
         $errorDiv = $this->generateErrorDiv($builder->getError());
        
         include_once("template/activite/form.php");
+    }
+
+    public function makeUploadPictureActivite($id) {
+        $title = "Upload d'une image";
+        $urlAction = $this->router->getActiviteUploadPictureURL($id);
+
+        include_once("template/activite/upload_picture.php");
     }
 
     public function makeDeleteActivitePage($id) {

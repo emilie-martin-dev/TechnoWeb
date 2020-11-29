@@ -12,7 +12,7 @@ class BuilderRole extends AbstractBuilder {
         parent::__construct($data, $error);
     }
 
-	public static function buildFromUtilisateur(Role $Utilisateur) {
+	public static function buildFromRole(Role $Utilisateur) {
 		return new BuilderRole(array(
 			BuilderRole::FIELD_ID => $Utilisateur->getId(),
 			BuilderRole::FIELD_LIBELLE => $Utilisateur->getLibelle()
