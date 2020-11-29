@@ -2,11 +2,24 @@
     include("template/base/header_html.php");
 ?>
 
-<h1>Title : <?= $title?></h1>
-<h1>Content : <?= $content?></h1>
+<h1 class="center-text"><?= $title?></h1>
 
-<p><a href="<?= $this->router->getActiviteModifURL($activite->getId())?>">Modifier</a></p>
-<p><a href="<?= $this->router->getActiviteSupprimerURL($activite->getId())?>">Supprimer</a></p>
+<p class="description"><?= $shortDesc?></p>
+
+<div class="row">
+    <div class="col w3">
+        <?= $img ?>
+    
+        <p><a href="<?= $this->router->getActiviteUploadPictureURL($activite->getId())?>">Upload</a></p>
+        <p><a href="<?= $this->router->getActiviteModifURL($activite->getId())?>">Modifier</a></p>
+        <p><a href="<?= $this->router->getActiviteSupprimerURL($activite->getId())?>">Supprimer</a></p>
+    </div>
+
+    <div class="col w8" id="shortDesc">
+        <p><?= $desc ?></p>
+    </div>
+</div>
+
 
 <?php
     include("template/base/footer_html.php");

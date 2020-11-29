@@ -66,7 +66,7 @@ class PhotoUploader {
         $ext = PhotoUploader::EXTS[$this->imgType];
         $this->fileName = $name . $ext;
 
-        if (!move_uploaded_file($this->file['tmp_name'], UPLOAD_FOLDER . $this->fileName)) {
+        if (!move_uploaded_file($this->file['tmp_name'], UPLOAD_SAVE_PATH . $this->fileName)) {
             $this->error = "Une erreur est survenue lors de la copie du fichier";
             return false;
         }

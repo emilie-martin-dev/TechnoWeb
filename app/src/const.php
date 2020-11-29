@@ -2,7 +2,8 @@
 
 define("WEBSITE_DEFAULT_NAME", "Activ'Normandie");
 
-define("UPLOAD_FOLDER", $_SERVER["DOCUMENT_ROOT"] . "/upload/");
+define("UPLOAD_PATH", "/upload/");
+define("UPLOAD_SAVE_PATH", $_SERVER["DOCUMENT_ROOT"] . UPLOAD_PATH);
 
 define("ROLE_ADMIN", "ADMIN");
 define("ROLE_USER", "USER");

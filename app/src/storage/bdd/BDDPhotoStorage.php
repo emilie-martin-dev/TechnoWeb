@@ -27,14 +27,14 @@ class BDDPhotoStorage implements IPhotoStorage {
         $sth->bindValue(":idActivite", $activiteId, PDO::PARAM_INT);
         $sth->execute();
         
-        $activites = array();
+        $photos = array();
         
         foreach($sth->fetchAll(PDO::FETCH_ASSOC) as $r) {
             $builder = new BuilderPhoto($r); 
-            $activites[] = $builder->create();
+            $photos[] = $builder->create();
         }
         
-        return $activites;
+        return $photos;
     }
 
     public function create(Photo $p) {

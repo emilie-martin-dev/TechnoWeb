@@ -28,10 +28,19 @@ class Controller {
 
         $activite = $activiteStorage->read($id);
 
-        if($activite != null)
-            $this->view->makeActivitePage($activite);
-        else 
+        if($activite != null) {
+            $photoStorage = $factory->getPhotoStorage();
+            
+            $imgs = $photoStorage->readAllByActiviteId($activite->getId());
+            $imgSrc = null;
+            if(!empty($imgs)) {
+                $imgSrc = $imgs[0]->getChemin();
+            }
+
+            $this->view->makeActivitePage($activite, $imgSrc);
+        } else {
             $this->view->make404Page();
+        } 
     }
 
     public function listActivites() {

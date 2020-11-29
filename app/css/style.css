@@ -78,6 +78,10 @@ td {
     margin: 0;
 }
 
+.center-text {
+    text-align: center;
+}
+
 .center {
     margin: auto;
     display: block;
@@ -147,4 +151,12 @@ td {
 .error-block ul {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+#shortDesc {
+    margin: auto;
+}
+
+.description {
+    color: rgb(119, 136, 153);
 }

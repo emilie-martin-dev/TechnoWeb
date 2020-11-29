@@ -58,9 +58,13 @@ class View {
         include_once("template/about/about.php");
     }
 
-    public function makeActivitePage(Activite $activite) {
+    public function makeActivitePage(Activite $activite, $imgSrc) {
         $title = $activite->getNom();
-        $content = $activite->getLieu();
+        $lieu = $activite->getLieu();
+        $desc = $activite->getDescription();
+        $shortDesc = $activite->getShortDescription();
+
+        $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
 
         include_once("template/activite/consulter.php");
     }
