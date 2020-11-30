@@ -15,3 +15,5 @@ define("SESSION_USER", "USER");
 
 define("STORAGE_BDD", 0);
 define("STORAGE_STUB", 1);
+
+define("CONFIG_COOKIE", "COOKIE_LOGIN_TIMEOUT");
