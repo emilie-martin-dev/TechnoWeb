@@ -14,7 +14,7 @@ class Router {
 
     public static function getInstance() {
         if(Router::$instance == null) {
-            Router::$instance = new Router();  
+            Router::$instance = new Router();
         }
 
         return Router::$instance;
@@ -53,12 +53,12 @@ class Router {
         ];
 
         $ctrl = $this->generateControler();
-        $this->router($urls, $ctrl);  
-    } 
+        $this->router($urls, $ctrl);
+    }
 
     private function getCurrentURL() {
         return isset($_SERVER["PATH_INFO"]) ? $_SERVER["PATH_INFO"] : "/";
-    } 
+    }
 
     private function generateControler() {
         $feedback = isset($_SESSION[SESSION_FEEDBACK]) ? $_SESSION[SESSION_FEEDBACK] : null;
@@ -74,7 +74,7 @@ class Router {
         $shown = false;
 
         foreach($urls as $u => $property) {
-            if(preg_match("/^".str_replace("/", "\/", $u)."\/?$/", $currentUrl)) {                
+            if(preg_match("/^".str_replace("/", "\/", $u)."\/?$/", $currentUrl)) {
                 $methodToCall = $property[0];
                 $methodArgs = $property[1];
                 $roles = $property[2];
@@ -85,7 +85,7 @@ class Router {
                     call_user_func(array($ctrl, $methodToCall), ...$methodArgs);
                     $shown = true;
                 }
-            
+
                 break;
             }
         }
@@ -101,7 +101,7 @@ class Router {
             unset($urlPath[count($urlPath) - 1]);
 
         return $urlPath;
-    } 
+    }
 
     private function formatArgs($methodArgs, $urlPath) {
         foreach($methodArgs as $k => $v) {
@@ -109,7 +109,7 @@ class Router {
                 $methodArgs[$k] = $urlPath[(int) $v];
             }
         }
-        
+
         return $methodArgs;
     }
 
@@ -130,11 +130,11 @@ class Router {
     public function getIndexURL() {
         return "/";
     }
-    
+
     public function get404URL() {
         return "/404";
     }
-    
+
     public function getActiviteListURL() {
         return "/activite";
     }
@@ -159,7 +159,7 @@ class Router {
         return "/activite/" . $id . "/delete";
     }
 
-    public function getAddCommentUrl($id) {
+    public function getAddCommentURL($id) {
         return "/activite/" . $id . "/addComment";
     }
 

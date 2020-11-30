@@ -18,7 +18,7 @@ class BuilderComment extends AbstractBuilder {
 		return new BuilderComment(array(
 			BuilderComment::FIELD_ID => $comment->getId(),
 			BuilderComment::FIELD_TEXTE => $comment->getTexte(),
-            BuilderComment::FIELD_ID_ACTIVITE => $comment->getActivite()->getId(),
+			BuilderComment::FIELD_ID_ACTIVITE => $comment->getActivite()->getId(),
 			BuilderComment::FIELD_ID_UTILISATEUR => $comment->getUtilisateur()->getId()
 		));
 	}

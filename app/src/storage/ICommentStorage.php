@@ -7,9 +7,9 @@ interface ICommentStorage{
 
     public function read($id);
 
-    public function readByIdActivite($id_activite);
+    public function readByIdActivite($idActivite);
 
-    public function readByIdUtilisateur($id_utilisateur);
+    public function readByIdUtilisateur($idUtilisateur);
 
     public function create(Comment $c);
 

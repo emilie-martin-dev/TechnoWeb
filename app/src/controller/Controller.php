@@ -38,45 +38,30 @@ class Controller {
                 $imgSrc = $imgs[0]->getChemin();
             }
 
-            $this->view->makeActivitePage($activite, $imgSrc);
-            $this->view->makeCommentPage($this->showCommentaire($id),$this->showAddCommentaire($id));
+            $this->view->makeActivitePage($activite, $imgSrc, $this->showCommentaire($id), $this->showAddCommentaire($id));
         } else {
             $this->view->make404Page();
         }
     }
 
     public function showCommentaire($id) {
-        $authManager = new AuthenticationManager();
-        if(!$authManager->isConnected()) {
-            $this->router->POSTRedirect($this->router->get404URL());
-            return;
-        }
-
         $factory = StorageFactory::getInstance();
         $commentStorage = $factory->getCommentStorage();
 
         $comment = $commentStorage->readByIdActivite($id);
 
+        $utilisateurStorage = $factory->getUtilisateurStorage();
+
         foreach($comment as $c) {
-            $utilisateurStorage = $factory->getUtilisateurStorage();
             $utilisateurBDD = $utilisateurStorage->read($c->getUtilisateur()->getId());
 
-            $utilisateur = new Utilisateur($c->getUtilisateur()->getId());
-            $utilisateur->setNom($utilisateurBDD->getNom());
-            $utilisateur->setPrenom($utilisateurBDD->getPrenom());
-            $c->setUtilisateur($utilisateur);
+            $utilisateur = new Utilisateur($utilisateurBDD);
         }
 
         return $comment;
     }
 
     public function showAddCommentaire($id) {
-        $authManager = new AuthenticationManager();
-        if(!$authManager->isConnected()) {
-            $this->router->POSTRedirect($this->router->get404URL());
-            return;
-        }
-
         $builder = $this->router->getFormData();
         if($builder == null) {
             $builder = new BuilderComment(array());
@@ -91,16 +76,10 @@ class Controller {
         $commentStorage = $factory->getCommentStorage();
 
         $authManager = new AuthenticationManager();
-        if(!$authManager->isConnected()) {
-            $this->router->POSTRedirect($this->router->get404URL());
-            return;
-        }
-
-        echo "id".$id;
 
         $builder = new BuilderComment($data);
         $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
-        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
+        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->isConnected()->getUser()->getId());
 
         if($builder->isValid()) {
             $commentStorage->create($builder->create());

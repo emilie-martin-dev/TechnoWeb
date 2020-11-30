@@ -1,8 +1,4 @@
-<?php
-    include("template/base/header_html.php");
-?>
-
-<h1><?= $title?></h1>
+<p>Espace commentaires</p>
 
 <?php
 if($builder != null){
@@ -32,8 +28,4 @@ if($comment != null){
 <?php
     }
 }
-?>
-
-<?php
-    include("template/base/footer_html.php");
 ?>

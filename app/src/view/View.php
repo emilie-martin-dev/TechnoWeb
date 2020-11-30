@@ -59,22 +59,16 @@ class View {
         include_once("template/about/about.php");
     }
 
-    public function makeActivitePage(Activite $activite, $imgSrc) {
+    public function makeActivitePage(Activite $activite, $imgSrc, $comment, BuilderComment $builder) {
         $title = $activite->getNom();
         $lieu = $activite->getLieu();
         $desc = $activite->getDescription();
         $shortDesc = $activite->getShortDescription();
 
         $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
-
-        include_once("template/activite/consulter.php");
-    }
-
-    public function makeCommentPage($comment, BuilderComment $builder) {
-        $title = "Espace commentaires";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
 
-        include_once("template/activite/comment.php");
+        include_once("template/activite/consulter.php");
     }
 
     public function makeListActivitePage($activites) {
