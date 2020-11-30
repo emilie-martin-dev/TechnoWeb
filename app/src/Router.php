@@ -48,7 +48,9 @@ class Router {
             "POST:/activite/[0-9]+/upload" => array("uploadPictureActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/login" => array("showLogin", array(), array()),
             "POST:/login" => array("login", array($_POST), array()),
-            "GET:/logout" => array("logout", array(), array())
+            "GET:/logout" => array("logout", array(), array()),
+            "GET:/sign_up" => array("showSign_up", array(), array()),
+			"POST:/sign_up" => array("sign_up", array($_POST), array())
         ];
 
         $ctrl = $this->generateControler();
@@ -164,5 +166,9 @@ class Router {
 
     public function getLogoutURL() {
         return "/logout";
+    }
+
+    public function getSignUpURL() {
+        return "/sign_up";
     }
 }

@@ -34,7 +34,7 @@ class StorageFactory {
             }
         }
 
-        return $this->bdd;        
+        return $this->bdd;
     }
 
     public function getActiviteStorage($storageType=null) {

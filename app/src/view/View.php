@@ -84,7 +84,7 @@ class View {
         $shortDescriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION));
         $descriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/activite/form.php");
     }
 
@@ -108,8 +108,16 @@ class View {
 
         $loginFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/login/login.php");
+    }
+
+    public function makeSignUpFormPage(BuilderUtilisateur $builder) {
+        $title = "Inscription";
+        $urlAction = $this->router->getSignUpURL();
+        $errorDiv = $this->generateErrorDiv($builder->getError());
+
+        include_once("template/sign_up/sign_up.php");
     }
 
 }
