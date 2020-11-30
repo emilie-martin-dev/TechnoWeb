@@ -1,6 +1,7 @@
 <?php
 
 require_once("model/Activite.php");
+require_once("model/Comment.php");
 require_once("model/builder/BuilderActivite.php");
 require_once("model/builder/BuilderUtilisateur.php");
 require_once("model/builder/BuilderLogin.php");
@@ -69,6 +70,13 @@ class View {
         include_once("template/activite/consulter.php");
     }
 
+    public function makeCommentPage($comment, BuilderComment $builder) {
+        $title = "Espace commentaires";
+        $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
+
+        include_once("template/activite/comment.php");
+    }
+
     public function makeListActivitePage($activites) {
         $title = "Liste des activités";
 
@@ -84,7 +92,7 @@ class View {
         $shortDescriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION));
         $descriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/activite/form.php");
     }
 
@@ -108,7 +116,7 @@ class View {
 
         $loginFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/login/login.php");
     }
 

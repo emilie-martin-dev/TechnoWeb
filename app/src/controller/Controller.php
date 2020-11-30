@@ -3,6 +3,7 @@
 require_once("auth/AuthenticationManager.php");
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
+require_once("model/builder/BuilderComment.php");
 require_once("model/builder/BuilderLogin.php");
 require_once("storage/StorageFactory.php");
 require_once("utils/PhotoUploader.php");
@@ -30,7 +31,7 @@ class Controller {
 
         if($activite != null) {
             $photoStorage = $factory->getPhotoStorage();
-            
+
             $imgs = $photoStorage->readAllByActiviteId($activite->getId());
             $imgSrc = null;
             if(!empty($imgs)) {
@@ -38,9 +39,76 @@ class Controller {
             }
 
             $this->view->makeActivitePage($activite, $imgSrc);
+            $this->view->makeCommentPage($this->showCommentaire($id),$this->showAddCommentaire($id));
         } else {
             $this->view->make404Page();
-        } 
+        }
+    }
+
+    public function showCommentaire($id) {
+        $authManager = new AuthenticationManager();
+        if(!$authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $factory = StorageFactory::getInstance();
+        $commentStorage = $factory->getCommentStorage();
+
+        $comment = $commentStorage->readByIdActivite($id);
+
+        foreach($comment as $c) {
+            $utilisateurStorage = $factory->getUtilisateurStorage();
+            $utilisateurBDD = $utilisateurStorage->read($c->getUtilisateur()->getId());
+
+            $utilisateur = new Utilisateur($c->getUtilisateur()->getId());
+            $utilisateur->setNom($utilisateurBDD->getNom());
+            $utilisateur->setPrenom($utilisateurBDD->getPrenom());
+            $c->setUtilisateur($utilisateur);
+        }
+
+        return $comment;
+    }
+
+    public function showAddCommentaire($id) {
+        $authManager = new AuthenticationManager();
+        if(!$authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $builder = $this->router->getFormData();
+        if($builder == null) {
+            $builder = new BuilderComment(array());
+            $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
+        }
+
+        return $builder;
+    }
+
+    public function addComment($id, array $data) {
+        $factory = StorageFactory::getInstance();
+        $commentStorage = $factory->getCommentStorage();
+
+        $authManager = new AuthenticationManager();
+        if(!$authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        echo "id".$id;
+
+        $builder = new BuilderComment($data);
+        $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
+        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
+
+        if($builder->isValid()) {
+            $commentStorage->create($builder->create());
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
+        } else {
+            $this->router->setFormData($builder);
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Formulaire invalide");
+        }
     }
 
     public function listActivites() {
@@ -74,7 +142,7 @@ class Controller {
 
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
-        
+
         if($builder->isValid()) {
             $factory = StorageFactory::getInstance();
             $activiteStorage = $factory->getActiviteStorage();
@@ -94,7 +162,7 @@ class Controller {
         if($activite == null || !$authManager->isConnected() || !$authManager->isAdmin() && $activite->getUtilisateur()->getId() != $authManager->getUser()->getId()) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -110,7 +178,7 @@ class Controller {
         }
 
         $builder = $this->router->getFormData();
-        if($builder == null) {              
+        if($builder == null) {
             $builder = BuilderActivite::buildFromActivite($activite);
         }
 
@@ -127,7 +195,7 @@ class Controller {
             $this->router->POSTRedirect($this->router->get404URL());
             return;
         }
-        
+
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $activite->getUtilisateur()->getId());
 
@@ -153,7 +221,7 @@ class Controller {
 
         $this->view->makeUploadPictureActivite($id);
     }
-    
+
     public function uploadPictureActivite($id) {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
@@ -166,7 +234,7 @@ class Controller {
         }
 
         $photoUploader = new PhotoUploader($_FILES["file"]);
-        if(!$photoUploader->isValid() || !$photoUploader->save()) { 
+        if(!$photoUploader->isValid() || !$photoUploader->save()) {
             $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), $photoUploader->getError());
             return;
         }
@@ -183,7 +251,7 @@ class Controller {
             $this->router->POSTRedirect($this->router->getActiviteURL($id), "Image uploadé avec succès");
             return;
         } else {
-            $this->router->setFormData($builder);                
+            $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), "Un problème est survenue lors de l'upload");
             return;
         }
