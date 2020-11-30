@@ -23,7 +23,7 @@ class BDDCommentStorage implements ICommentStorage {
 
     public function readByIdActivite($idActivite) {
         $sth = $this->bdd->prepare("SELECT * FROM COMMENTAIRE WHERE ID_ACTIVITE  = :id_activite");
-        $sth->bindValue(":id_activite", $id_activite, PDO::PARAM_INT);
+        $sth->bindValue(":id_activite", $idActivite, PDO::PARAM_INT);
         $sth->execute();
 
         $comment = array();
@@ -38,7 +38,7 @@ class BDDCommentStorage implements ICommentStorage {
 
     public function readByIdUtilisateur($idUtilisateur) {
         $sth = $this->bdd->prepare("SELECT * FROM COMMENTAIRE WHERE ID_UTILISATEUR  = :id_utilisateur");
-        $sth->bindValue(":id_utilisateur", $id_utilisateur, PDO::PARAM_INT);
+        $sth->bindValue(":id_utilisateur", $idUtilisateur, PDO::PARAM_INT);
         $sth->execute();
 
         $comment = array();

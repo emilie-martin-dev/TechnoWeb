@@ -55,7 +55,7 @@ class Controller {
         foreach($comment as $c) {
             $utilisateurBDD = $utilisateurStorage->read($c->getUtilisateur()->getId());
 
-            $utilisateur = new Utilisateur($utilisateurBDD);
+            $c->setUtilisateur($utilisateurBDD);
         }
 
         return $comment;
@@ -79,7 +79,7 @@ class Controller {
 
         $builder = new BuilderComment($data);
         $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
-        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->isConnected()->getUser()->getId());
+        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
 
         if($builder->isValid()) {
             $commentStorage->create($builder->create());
