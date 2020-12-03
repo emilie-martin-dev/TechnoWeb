@@ -334,4 +334,7 @@ class Controller {
         }
     }
 
+    public function error404(){
+        $this->view->make404Page();
+    }
 }

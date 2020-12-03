@@ -51,7 +51,8 @@ class Router {
             "GET:/configAdmin" => array("showConfigAdmin", array(), array(ROLE_ADMIN)),
             "POST:/updateConfigAdmin/[0-9]+" => array("updateConfigAdmin", array("1",$_POST), array(ROLE_ADMIN)),
             "GET:/sign_up" => array("showSign_up", array(), array()),
-            "POST:/sign_up" => array("sign_up", array($_POST), array())
+            "POST:/sign_up" => array("sign_up", array($_POST), array()),
+            "GET:/404" => array("error404", array(), array())
         ];
 
         $ctrl = $this->generateControler();
@@ -94,7 +95,7 @@ class Router {
         }
 
         if(!$shown) {
-            echo "404";
+            $this->POSTRedirect($this->get404URL());
         }
     }
 
@@ -170,6 +171,7 @@ class Router {
         return "/logout";
     }
 
+<<<<<<< HEAD
     public function getConfigAdminURL(){
         return "/configAdmin";
     }
@@ -181,4 +183,6 @@ class Router {
     public function getSignUpURL() {
         return "/sign_up";
     }
+=======
+>>>>>>> feat: css page d'accueil + Error404
 }

@@ -102,7 +102,7 @@ td {
     text-align: center;
 }
 
-.form-center input, 
+.form-center input,
 .form-center label,
 .form-center textarea {
     display: block;
@@ -132,7 +132,7 @@ td {
     display: block;
     background-color: rgb(137, 207, 224);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 1em;    
+    padding: 1em;
     margin-bottom: 1em;
 }
 
@@ -141,6 +141,7 @@ td {
 }
 
 .error-block {
+    font-weight: bold;
     display: block;
     background-color: rgb(243, 72, 72);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -159,4 +160,42 @@ td {
 
 .description {
     color: rgb(119, 136, 153);
+}
+
+.nomLister{
+    background-color: #DFDFDF;
+    font-size: 1.2em;
+}
+
+.titreSite{
+    font-style: italic;
+}
+
+.littleSize{
+    font-size: 0.8em;
+}
+
+
+.footer{
+    width: 100%;
+}
+
+.footer img{
+    width: auto;
+    height: 100px;
+    margin: 3%;
+}
+
+
+html{
+    background-color: #DFDFDF;
+}
+
+body {
+    display: block;
+    margin: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 16px;
+    background-color: #ededed;
+
 }
