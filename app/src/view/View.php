@@ -86,6 +86,17 @@ class View {
     public function makeListActivitePage($activites) {
         $title = "Liste des activités";
 
+        $listeActivites = "";
+        if($activites != null) {
+            foreach($activites as $a) {
+                $idActivites = $a->getId();
+                $nomActivites = $a->getNom();
+                $lieuActivites = $a->getLieu();
+                $shortDescriptionActivites = $a->getShortDescription();
+                $listeActivites .= "<p><a href='".$this->router->getActiviteUrl($idActivites)."'>".$nomActivites."</a> - ".$lieuActivites.": ".$shortDescriptionActivites."</p><hr/>";
+            }
+        }
+
         include_once("template/activite/lister.php");
     }
 
