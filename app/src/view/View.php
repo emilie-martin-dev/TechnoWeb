@@ -21,8 +21,7 @@ class View {
     }
 
     public function make404Page() {
-        $title = "Error";
-        $content = "Error";
+        $title = "<div class = \"error-block\">Error 404 </div><br>Oups ! Cette page ne vous est pas autorisé !<br>";
 
         include_once("template/activite/consulter.php");
     }
@@ -84,7 +83,7 @@ class View {
         $shortDescriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_SHORT_DESCRIPTION));
         $descriptionFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderActivite::FIELD_DESCRIPTION));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/activite/form.php");
     }
 
@@ -108,7 +107,7 @@ class View {
 
         $loginFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN));
         $errorDiv = $this->generateErrorDiv($builder->getError());
-       
+
         include_once("template/login/login.php");
     }
 

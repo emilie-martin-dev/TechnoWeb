@@ -30,7 +30,7 @@ class Controller {
 
         if($activite != null) {
             $photoStorage = $factory->getPhotoStorage();
-            
+
             $imgs = $photoStorage->readAllByActiviteId($activite->getId());
             $imgSrc = null;
             if(!empty($imgs)) {
@@ -40,7 +40,7 @@ class Controller {
             $this->view->makeActivitePage($activite, $imgSrc);
         } else {
             $this->view->make404Page();
-        } 
+        }
     }
 
     public function listActivites() {
@@ -74,7 +74,7 @@ class Controller {
 
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
-        
+
         if($builder->isValid()) {
             $factory = StorageFactory::getInstance();
             $activiteStorage = $factory->getActiviteStorage();
@@ -94,7 +94,7 @@ class Controller {
         if($activite == null || !$authManager->isConnected() || !$authManager->isAdmin() && $activite->getUtilisateur()->getId() != $authManager->getUser()->getId()) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -110,7 +110,7 @@ class Controller {
         }
 
         $builder = $this->router->getFormData();
-        if($builder == null) {              
+        if($builder == null) {
             $builder = BuilderActivite::buildFromActivite($activite);
         }
 
@@ -127,7 +127,7 @@ class Controller {
             $this->router->POSTRedirect($this->router->get404URL());
             return;
         }
-        
+
         $builder = new BuilderActivite($data);
         $builder->setAttribute(BuilderActivite::FIELD_ID_UTILISATEUR, $activite->getUtilisateur()->getId());
 
@@ -153,7 +153,7 @@ class Controller {
 
         $this->view->makeUploadPictureActivite($id);
     }
-    
+
     public function uploadPictureActivite($id) {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
@@ -166,7 +166,7 @@ class Controller {
         }
 
         $photoUploader = new PhotoUploader($_FILES["file"]);
-        if(!$photoUploader->isValid() || !$photoUploader->save()) { 
+        if(!$photoUploader->isValid() || !$photoUploader->save()) {
             $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), $photoUploader->getError());
             return;
         }
@@ -183,7 +183,7 @@ class Controller {
             $this->router->POSTRedirect($this->router->getActiviteURL($id), "Image uploadé avec succès");
             return;
         } else {
-            $this->router->setFormData($builder);                
+            $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteUploadPictureURL($id), "Un problème est survenue lors de l'upload");
             return;
         }
@@ -252,5 +252,9 @@ class Controller {
         $authManager->disconnectUser();
 
         $this->router->POSTRedirect($this->router->getIndexURL(), "Déconnexion réussie");
+    }
+
+    public function error404(){
+        $this->view->make404Page();
     }
 }
