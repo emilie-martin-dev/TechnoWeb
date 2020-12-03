@@ -171,7 +171,6 @@ class Router {
         return "/logout";
     }
 
-<<<<<<< HEAD
     public function getConfigAdminURL(){
         return "/configAdmin";
     }
@@ -183,6 +182,19 @@ class Router {
     public function getSignUpURL() {
         return "/sign_up";
     }
-=======
->>>>>>> feat: css page d'accueil + Error404
+
+    public function getMenu(){
+        $auth = new AuthenticationManager();
+        if($auth->isConnected()){
+            $affiche = "<p><a href=".$this->getLogoutURL().">Se deconnecter</a></p>";
+            if($auth->isAdmin()){
+                $affiche = $affiche."<p><a href=".$this->getConfigAdminURL().">Paramètre administrateur</a></p>";
+            }
+
+            return $affiche;
+        }else{
+            return "<p><a href=".$this->getSignUpURL().">S'inscrire</a></p> <p><a href=".$this->getLoginURL().">Se connecter</a></p>";
+        }
+    }
+
 }

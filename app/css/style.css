@@ -154,6 +154,11 @@ td {
     margin-bottom: 0;
 }
 
+.textBold{
+    font-weight: bold;
+    font-size: 1.8em;
+}
+
 #shortDesc {
     margin: auto;
 }
@@ -167,8 +172,19 @@ td {
     font-size: 1.2em;
 }
 
+.nomLister a{
+    text-decoration:none;
+    color: black;
+}
+
 .titreSite{
     font-style: italic;
+    margin-top: 2%;
+    color: black;
+}
+
+.titreSite a{
+    text-decoration:none;
 }
 
 .littleSize{
@@ -184,6 +200,12 @@ td {
     width: auto;
     height: 100px;
     margin: 3%;
+}
+
+.boutonHeader a{
+    text-decoration:none;
+    color: black;
+    font-style: italic;
 }
 
 
