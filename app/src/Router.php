@@ -168,11 +168,11 @@ class Router {
         return "/logout";
     }
 
-    public function getConfigAdmin(){
+    public function getConfigAdminURL(){
         return "/configAdmin";
     }
 
-    public function getUpdateConfigUrl($id){
+    public function getUpdateConfigURL($id){
         return "/updateConfigAdmin/".$id;
     }
 }

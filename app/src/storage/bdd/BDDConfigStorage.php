@@ -23,7 +23,7 @@ class BDDConfigStorage implements IConfigStorage {
 
     public function readLibelle($libelle) {
         $sth = $this->bdd->prepare("SELECT * FROM CONFIG WHERE LIBELLE = :libelle");
-        $sth->bindValue(":libelle", $libelle, PDO::PARAM_INT);
+        $sth->bindValue(":libelle", $libelle);
         $sth->execute();
 
         $builder = new BuilderConfig($sth->fetch(PDO::FETCH_ASSOC));
@@ -33,7 +33,7 @@ class BDDConfigStorage implements IConfigStorage {
 
     public function updateValeurs($id, Config $config) {
         $sth = $this->bdd->prepare("UPDATE CONFIG SET VALEUR=:valeur WHERE ID=:id");
-        $sth->bindValue(":valeur", $config->getValeur(), PDO::PARAM_INT);
+        $sth->bindValue(":valeur", $config->getValeur());
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
 
         $sth->execute();

@@ -13,13 +13,13 @@ class BuilderConfig extends AbstractBuilder {
         parent::__construct($data, $error);
     }
 
-	public static function buildFromConfig(Config $config) {
-		return new BuilderConfig(array(
-			BuilderConfig::FIELD_ID => $config->getId(),
-			BuilderConfig::FIELD_LIBELLE => $config->getLibelle(),
-			BuilderConfig::FIELD_VALEUR => $config->getValeur(),
-		));
-	}
+    public static function buildFromConfig(Config $config) {
+        return new BuilderConfig(array(
+            BuilderConfig::FIELD_ID => $config->getId(),
+            BuilderConfig::FIELD_LIBELLE => $config->getLibelle(),
+            BuilderConfig::FIELD_VALEUR => $config->getValeur(),
+        ));
+    }
 
     public function create() {
         if($this->data == null || $this->data != null && !$this->isValid())

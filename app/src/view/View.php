@@ -114,7 +114,7 @@ class View {
 
     public function makeConfigAdminFormPage(BuilderConfig $builder){
         $title = "Configuration";
-        $urlAction = $this->router->getUpdateConfigUrl($builder->getAttribute(BuilderConfig::FIELD_ID));
+        $urlAction = $this->router->getUpdateConfigURL($builder->getAttribute(BuilderConfig::FIELD_ID));
 
         $libelleFieldValue = $builder->getAttribute(BuilderConfig::FIELD_LIBELLE);
         $valeurFieldValue = $builder->getAttribute(BuilderConfig::FIELD_VALEUR);

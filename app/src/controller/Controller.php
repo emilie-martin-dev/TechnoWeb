@@ -197,7 +197,7 @@ class Controller {
         $activite = $activiteStorage->read($id);
 
         if(!$this->isUserActivityOwner($activite)) {
-            $this->router->POSTRedirect($this->router-configAdmin>get404URL());
+            $this->router->POSTRedirect($this->router->get404URL());
             return;
         }
 
@@ -265,17 +265,16 @@ class Controller {
             return;
         }
 
-        $cookie = $configStorage->readLibelle(CONFIG_COOKIE);
+        $config = $configStorage->readLibelle(CONFIG_COOKIE);
 
-        if($cookie->getLibelle() == null){
-            $this->router->setFormData($builder);
-            $this->router->POSTRedirect($this->router->get404URL(), "Il n'y a pas de cookie");
+        if($config->getLibelle() == null){
+            $this->router->POSTRedirect($this->router->get404URL(), "Il n'y a pas de paramètre " . $config->getLibelle());
             return;
         }
 
         $builder = $this->router->getFormData();
         if($builder == null) {
-            $builder = BuilderConfig::buildFromConfig($cookie);
+            $builder = BuilderConfig::buildFromConfig($config);
         }
 
         $this->view->makeConfigAdminFormPage($builder);
@@ -283,23 +282,22 @@ class Controller {
     }
 
     public function updateConfigAdmin($id, array $data){
-
         $factory = StorageFactory::getInstance();
         $configStorage = $factory->getConfigStorage();
 
-        $cookie = $configStorage->read($id);
+        $config = $configStorage->read($id);
 
         $builder = new BuilderConfig($data);
 
-        $builder->setAttribute(BuilderConfig::FIELD_LIBELLE, $cookie->getLibelle());
+        $builder->setAttribute(BuilderConfig::FIELD_LIBELLE, $config->getLibelle());
         $builder->setAttribute(BuilderConfig::FIELD_ID, $id);
 
         if($builder->isValid()) {
             $configStorage->updateValeurs($id, $builder->create());
-            $this->router->POSTRedirect($this->router->getConfigAdmin(), "Modification réussie");
+            $this->router->POSTRedirect($this->router->getConfigAdminURL(), "Modification réussie");
         } else {
             $this->router->setFormData($builder);
-            $this->router->POSTRedirect($this->router->getConfigAdmin(), "Formulaire invalide");
+            $this->router->POSTRedirect($this->router->getConfigAdminURL(), "Formulaire invalide");
         }
     }
 }
