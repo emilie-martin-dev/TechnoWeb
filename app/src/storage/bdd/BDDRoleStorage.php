@@ -11,14 +11,26 @@ class BDDRoleStorage implements IRoleStorage {
     public function __construct($bdd) {
         $this->bdd = $bdd;
     }
-    
+
     public function read($id) {
         $sth = $this->bdd->prepare("SELECT * FROM ROLE WHERE ID = :id");
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
         $sth->execute();
-        
-        $builder = new BuilderRole($sth->fetch(PDO::FETCH_ASSOC)); 
-            
+
+        $builder = new BuilderRole($sth->fetch(PDO::FETCH_ASSOC));
+
         return $builder->create();
     }
+
+    public function readByLibelle($libelle) {
+
+        $sth = $this->bdd->prepare("SELECT * FROM ROLE WHERE LIBELLE = :libelle");
+        $sth->bindValue(":libelle", $libelle);
+        $sth->execute();
+
+        $builder = new BuilderRole($sth->fetch(PDO::FETCH_ASSOC));
+
+        return $builder->create();
+    }
+
 }

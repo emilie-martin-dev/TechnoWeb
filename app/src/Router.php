@@ -50,7 +50,9 @@ class Router {
             "POST:/login" => array("login", array($_POST), array()),
             "GET:/logout" => array("logout", array(), array()),
             "GET:/configAdmin" => array("showConfigAdmin", array(), array(ROLE_ADMIN)),
-            "POST:/updateConfigAdmin/[0-9]+" => array("updateConfigAdmin", array("1",$_POST), array(ROLE_ADMIN))
+            "POST:/updateConfigAdmin/[0-9]+" => array("updateConfigAdmin", array("1",$_POST), array(ROLE_ADMIN)),
+            "GET:/sign_up" => array("showSign_up", array(), array()),
+            "POST:/sign_up" => array("sign_up", array($_POST), array())
         ];
 
         $ctrl = $this->generateControler();
@@ -174,5 +176,9 @@ class Router {
 
     public function getUpdateConfigURL($id){
         return "/updateConfigAdmin/".$id;
+    }
+
+    public function getSignUpURL() {
+        return "/sign_up";
     }
 }

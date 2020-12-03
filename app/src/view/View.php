@@ -112,6 +112,7 @@ class View {
         include_once("template/login/login.php");
     }
 
+
     public function makeConfigAdminFormPage(BuilderConfig $builder){
         $title = "Configuration";
         $urlAction = $this->router->getUpdateConfigURL($builder->getAttribute(BuilderConfig::FIELD_ID));
@@ -122,6 +123,14 @@ class View {
         $errorDiv = $this->generateErrorDiv($builder->getError());
 
         include_once("template/config/config.php");
+    }
+
+    public function makeSignUpFormPage(BuilderUtilisateur $builder) {
+        $title = "Inscription";
+        $urlAction = $this->router->getSignUpURL();
+        $errorDiv = $this->generateErrorDiv($builder->getError());
+
+        include_once("template/sign_up/sign_up.php");
     }
 
 }
