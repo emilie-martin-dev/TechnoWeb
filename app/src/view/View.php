@@ -21,9 +21,10 @@ class View {
     }
 
     public function make404Page() {
-        $title = "<div class = \"error-block\">Error 404 </div><br>Oups ! Cette page ne vous est pas autorisé !<br>";
+        $title = "Error 404";
+        $content = "Oups ! Cette page ne vous est pas autorisé !";
 
-        include_once("template/activite/consulter.php");
+        include_once("template/error/error404.php");
     }
 
     public function generateErrorDiv($errors)  {
