@@ -22,7 +22,7 @@ class BDDRoleStorage implements IRoleStorage {
         return $builder->create();
     }
 
-    public function readLibelle($libelle) {
+    public function readByLibelle($libelle) {
 
         $sth = $this->bdd->prepare("SELECT * FROM ROLE WHERE LIBELLE = :libelle");
         $sth->bindValue(":libelle", $libelle);

@@ -227,28 +227,28 @@ class Controller {
         $this->view->makeSignUpFormPage($builder);
     }
 
-	public function sign_up(array $data) {
+    public function sign_up(array $data) {
         $factory = StorageFactory::getInstance();
         $roleStorage = $factory->getRoleStorage();
         $utilisateurStorage = $factory->getUtilisateurStorage();
 
         $builder = new BuilderUtilisateur($data);
-		$builder->setAttribute(BuilderUtilisateur::FIELD_ID_ROLE, $roleStorage->readLibelle(ROLE_USER)->getId());
+        $builder->setAttribute(BuilderUtilisateur::FIELD_ID_ROLE, $roleStorage->readByLibelle(ROLE_USER)->getId());
 
-        if($utilisateurStorage->readLogin($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN)) != null){
+        if($utilisateurStorage->readByLogin($builder->getAttribute(BuilderUtilisateur::FIELD_LOGIN)) != null){
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getSignUpURL(), "Login déjà utiliser");
             return;
-        }else if($builder->isValid()){
+        } else if($builder->isValid()){
             $utilisateurStorage->create($builder->create());
 
-			$this->router->POSTRedirect($this->router->getLoginURL(), "Création utilisateur réussie");
+            $this->router->POSTRedirect($this->router->getLoginURL(), "Création utilisateur réussie. Vous pouvez maintenant vous connecter.");
             return;
-		}else{
-			$this->router->setFormData($builder);
+        } else{
+            $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getSignUpURL(), "Formulaire non valide");
             return;
-		}
+        }
     }
 
     public function showLogin() {

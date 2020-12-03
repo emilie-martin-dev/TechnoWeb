@@ -50,7 +50,7 @@ class Router {
             "POST:/login" => array("login", array($_POST), array()),
             "GET:/logout" => array("logout", array(), array()),
             "GET:/sign_up" => array("showSign_up", array(), array()),
-			"POST:/sign_up" => array("sign_up", array($_POST), array())
+            "POST:/sign_up" => array("sign_up", array($_POST), array())
         ];
 
         $ctrl = $this->generateControler();

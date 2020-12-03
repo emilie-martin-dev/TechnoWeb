@@ -18,15 +18,14 @@ class BDDUtilisateurStorage implements IUtilisateurStorage {
         $sth->bindValue(":prenom", $utilisateur->getPrenom());
         $sth->bindValue(":login", $utilisateur->getLogin());
         $sth->bindValue(":password", password_hash($utilisateur->getPassword(), PASSWORD_BCRYPT));
-		$sth->bindValue(":role", $utilisateur->getRole()->getId(), PDO::PARAM_INT);
-
+        $sth->bindValue(":role", $utilisateur->getRole()->getId(), PDO::PARAM_INT);
 
         $sth->execute();
 
         return $this->bdd->lastInsertId();
     }
 
-    public function readLogin($login) {
+    public function readByLogin($login) {
         $sth = $this->bdd->prepare("SELECT * FROM UTILISATEUR WHERE LOGIN = :login");
         $sth->bindValue(":login", $login);
         $sth->execute();
