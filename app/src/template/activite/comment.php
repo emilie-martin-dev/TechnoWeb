@@ -1,7 +1,7 @@
 <p>Espace commentaires</p>
 
 <?php
-if($builder != null){
+
 ?>
 
 <form action="<?= $urlAction?>" method="POST">
@@ -9,23 +9,13 @@ if($builder != null){
     <input type="submit" value="Valider"/>
 </form>
 
+
 <?php
-}else{
+
+
+
 ?>
-
-<p>Vous voulez ajouter un commentaire ? <a href="<?= $this->router->getLoginUrl()?>">Connectez-vous !</a> - ou - <a href="<?= $this->router->getSignUpUrl()?>">Inscrivez-vous !</a></p>
-
+        <?=$commentaire?>
 <?php
-}
-if($comment != null){
-    foreach($comment as $c) {
-?>
-        <p><?=$c->getUtilisateur()->getNom()?> <?=$c->getUtilisateur()->getPrenom()?> a écrit:</p>
 
-        <p><?=$c->getTexte()?></p>
-
-        <hr/>
-<?php
-    }
-}
 ?>

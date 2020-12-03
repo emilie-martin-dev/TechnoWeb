@@ -53,6 +53,7 @@ class View {
         return $feedbackDiv;
     }
 
+
     public function makeAboutPage() {
         $title = "A propos";
 
@@ -67,6 +68,17 @@ class View {
 
         $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
+
+        $commentaire = "";
+
+        if($comment != null) {
+            foreach($comment as $c) {
+                $nomUtilisateur = $c->getUtilisateur()->getNom();
+                $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
+                $texte = $c->getTexte();
+                $commentaire .= "<p>".$nomUtilisateur." ".$prenomUtilisateur." a écrit:</p><br><p>".$texte."</p><br><hr/>";
+            }
+        }
 
         include_once("template/activite/consulter.php");
     }
