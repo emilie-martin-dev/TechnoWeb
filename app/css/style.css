@@ -235,6 +235,10 @@ td {
     font-weight: bold;
 }
 
+#actions p {
+    text-align: center;
+}
+
 footer{
     width: 100%;
     margin-top: 1.5em;

@@ -84,28 +84,29 @@ class View {
     }
 
     public function makeActivitePage(Activite $activite, $imgSrc, $comments, BuilderComment $builder, $isActiviteOwner) {
-        $title = $activite->getNom();
-        $lieu = $activite->getLieu();
-        $desc = $activite->getDescription();
-        $shortDesc = $activite->getShortDescription();
+        $title = $this->escapeHtmlSpecialChars($activite->getNom());
+        $lieu = $this->escapeHtmlSpecialChars($activite->getLieu());
+        $desc = $this->escapeHtmlSpecialChars($activite->getDescription());
+        $shortDesc = $this->escapeHtmlSpecialChars($activite->getShortDescription());
 
         $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
 
         $commentairesDiv = "";
         foreach($comments as $c) {
-            $nomUtilisateur = $c->getUtilisateur()->getNom();
-            $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
-            $texte = $c->getTexte();
+            $nomUtilisateur = $this->escapeHtmlSpecialChars($c->getUtilisateur()->getNom());
+            $prenomUtilisateur = $this->escapeHtmlSpecialChars($c->getUtilisateur()->getPrenom());
+            $texte = $this->escapeHtmlSpecialChars($c->getTexte());
             $commentairesDiv .= "<div class=\"comment\"><p>".$nomUtilisateur." ".$prenomUtilisateur." :</p><p>".$texte."</p></div><hr/>";
         }
         
-        $actions = "";
+        $actions = "<div id=\"actions\">";
         if($isActiviteOwner) {
             $actions .= "<p><a href=" . $this->router->getActiviteUploadPictureURL($activite->getId()) . ">Upload</a></p>";
             $actions .= "<p><a href=" . $this->router->getActiviteModifURL($activite->getId()) . ">Modifier</a></p>";
             $actions .= "<p><a href=" . $this->router->getActiviteSupprimerURL($activite->getId()) . ">Supprimer</a></p>";
         }
+        $actions .= "</div>";
 
         include_once("template/activite/consulter.php");
     }
@@ -115,10 +116,10 @@ class View {
 
         $listeActivitesDiv = "";
         foreach($activites as $a) {
-            $idActivites = $a->getId();
-            $nomActivites = $a->getNom();
-            $lieuActivites = $a->getLieu();
-            $shortDescriptionActivites = $a->getShortDescription();
+            $idActivites = $this->escapeHtmlSpecialChars($a->getId());
+            $nomActivites = $this->escapeHtmlSpecialChars($a->getNom());
+            $lieuActivites = $this->escapeHtmlSpecialChars($a->getLieu());
+            $shortDescriptionActivites = $this->escapeHtmlSpecialChars($a->getShortDescription());
             
             $listeActivitesDiv .= "
                     <div class=\"row\">
@@ -127,8 +128,8 @@ class View {
                         </div>
 
                         <div class=\"col w7\">
-                            <p><a href=" . $this->router->getActiviteUrl($a->getId()) . ">" . $a->getNom() . " - " . $a->getLieu() ."</a></p>
-                            <p>". $a->getShortDescription() ."</p>
+                            <p><a href=" . $this->router->getActiviteUrl($a->getId()) . ">" . $this->escapeHtmlSpecialChars($a->getNom()) . " - " . $this->escapeHtmlSpecialChars($a->getLieu()) ."</a></p>
+                            <p>". $this->escapeHtmlSpecialChars($a->getShortDescription()) ."</p>
                         </div>
                     </div>
                     <hr/>";
@@ -178,8 +179,8 @@ class View {
         $title = "Configuration";
         $urlAction = $this->router->getUpdateConfigURL($builder->getAttribute(BuilderConfig::FIELD_ID));
 
-        $libelleFieldValue = $builder->getAttribute(BuilderConfig::FIELD_LIBELLE);
-        $valeurFieldValue = $builder->getAttribute(BuilderConfig::FIELD_VALEUR);
+        $libelleFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderConfig::FIELD_LIBELLE));
+        $valeurFieldValue = $this->escapeHtmlSpecialChars($builder->getAttribute(BuilderConfig::FIELD_VALEUR));
 
         $errorDiv = $this->generateErrorDiv($builder->getError());
 
