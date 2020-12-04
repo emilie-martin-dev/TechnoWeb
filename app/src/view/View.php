@@ -109,6 +109,8 @@ class View {
         }
         
         $actions = "<div id=\"actions\">";
+        $actions .= "<p><a href=" . $this->router->getActivitePictureURL($activite->getId()) . ">Voir les photos</a></p>";
+            
         if($isActiviteOwner) {
             $actions .= "<p><a href=" . $this->router->getActiviteUploadPictureURL($activite->getId()) . ">Upload</a></p>";
             $actions .= "<p><a href=" . $this->router->getActiviteModifURL($activite->getId()) . ">Modifier</a></p>";
@@ -117,6 +119,33 @@ class View {
         $actions .= "</div>";
 
         include_once("template/activite/consulter.php");
+    }
+
+    public function makePictureActivitePage(Activite $activite, $imgs, $isActiviteOwner) {
+        $title = $activite->getNom() . " - Photos";
+
+        $activiteUrl = $this->router->getActiviteURL($activite->getId());
+
+        $listePhotoDiv = "";
+        foreach($imgs as $img) {
+            $listePhotoDiv .= "
+                    <div class='col w5'>
+                    <img src=\"" . $this->getImagePath($img->getChemin()) . "\" class=\"w12\"/>";
+            
+            if($isActiviteOwner)
+                $listePhotoDiv .= "
+                        <a href='" . $this->router->getPictureDeleteURL($img->getId()) . "'>Supprimer</a>
+                        </div>";
+        } 
+
+        include_once("template/activite/photos.php");
+    }
+
+    public function makePictureDeletePage($idPicture) {
+        $title = "Confirmation de suppression";
+        $urlAction = $this->router->getPictureDeleteURL($idPicture);
+
+        include_once("template/activite/picture_delete.php");
     }
 
     public function makeListActivitePage($activites, $imgsSrc) {

@@ -43,6 +43,9 @@ class Router {
             "GET:/activite/[0-9]+/delete" => array("showDeleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
             "POST:/activite/[0-9]+/delete" => array("deleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/activite/[0-9]+/update" => array("showUpdateActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/activite/[0-9]+/pictures" => array("showPicturesActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "GET:/pictures/[0-9]+/delete" => array("showPicturesDeleteActivite", array("1", "2"), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/pictures/[0-9]+/delete" => array("picturesDeleteActivite", array("1", "2"), array(ROLE_USER, ROLE_ADMIN)),
             "POST:/activite/[0-9]+/update" => array("updateActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/activite/[0-9]+/upload" => array("showUploadPictureActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
             "POST:/activite/[0-9]+/upload" => array("uploadPictureActivite", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
@@ -158,6 +161,14 @@ class Router {
 
     public function getActiviteUploadPictureURL($id) {
         return "/activite/" . $id . "/upload";
+    }
+
+    public function getActivitePictureURL($id) {
+        return "/activite/" . $id . "/pictures";
+    }
+
+    public function getPictureDeleteURL($idPhoto) {
+        return "/pictures/" . $idPhoto . "/delete";
     }
 
     public function getActiviteSupprimerURL($id) {

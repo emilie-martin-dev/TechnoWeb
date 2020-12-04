@@ -20,6 +20,15 @@ class Controller {
         $this->router = Router::getInstance();
     }
 
+    public function isUserActivityOwner($activite) {
+        $authManager = new AuthenticationManager();
+        if($activite == null || !$authManager->isConnected() || !$authManager->isAdmin() && $activite->getUtilisateur()->getId() != $authManager->getUser()->getId()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function about() {
         $this->view->makeAboutPage();
     }
@@ -138,15 +147,6 @@ class Controller {
         }
     }
 
-    public function isUserActivityOwner($activite) {
-        $authManager = new AuthenticationManager();
-        if($activite == null || !$authManager->isConnected() || !$authManager->isAdmin() && $activite->getUtilisateur()->getId() != $authManager->getUser()->getId()) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function showUpdateActivite($id) {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
@@ -186,6 +186,63 @@ class Controller {
         } else {
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteModifURL($id), "Formulaire invalide");
+        }
+    }
+
+    public function showPicturesDeleteActivite($idPicture) {
+        $factory = StorageFactory::getInstance();
+        $photoStorage = $factory->getPhotoStorage();
+        $activiteStorage = $factory->getActiviteStorage();
+
+        $photo = $photoStorage->read($idPicture);
+        if($photo == null) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $activiteId = $photo->getActivite()->getId();
+        $activite = $activiteStorage->read($activiteId);
+        if(!$this->isUserActivityOwner($activite)) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $this->view->makePictureDeletePage($idPicture, $this->isUserActivityOwner($activite));
+    }
+
+    public function picturesDeleteActivite($idPicture) {
+        $factory = StorageFactory::getInstance();
+        $photoStorage = $factory->getPhotoStorage();
+        $activiteStorage = $factory->getActiviteStorage();
+
+        $photo = $photoStorage->read($idPicture);
+        if($photo == null) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+        
+        $activiteId = $photo->getActivite()->getId();
+
+        if(!$this->isUserActivityOwner($activiteStorage->read($activiteId))) {
+            $this->router->POSTRedirect($this->router->get404URL());
+            return;
+        }
+
+        $photoStorage->delete($idPicture);
+        $this->router->POSTRedirect($this->router->getActiviteURL($activiteId), "Suppression réussie");
+    }
+
+    public function showPicturesActivite($id) {
+        $factory = StorageFactory::getInstance();
+        $activite = $factory->getActiviteStorage()->read($id);
+
+        if($activite != null) {
+            $photoStorage = $factory->getPhotoStorage();
+
+            $imgs = $photoStorage->readAllByActiviteId($activite->getId());
+            $this->view->makePictureActivitePage($activite, $imgs, $this->isUserActivityOwner($activite));
+        } else {
+            $this->view->make404Page();
         }
     }
 
