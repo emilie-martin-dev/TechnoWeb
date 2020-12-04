@@ -81,8 +81,22 @@ class Controller {
     public function listActivites() {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
+        $photoStorage = $factory->getPhotoStorage();
 
-        $this->view->makeListActivitePage($activiteStorage->readAll());
+        $activites = $activiteStorage->readAll();
+
+        $imgSrc = array();
+        foreach($activites as $a) {
+            $imgs = $photoStorage->readAllByActiviteId($a->getId());
+            
+            if(!empty($imgs)) {
+                $imgSrc[] = $imgs[0]->getChemin();
+            } else {
+                $imgSrc[] = "";
+            }
+        }
+
+        $this->view->makeListActivitePage($activites, $imgSrc);
     }
 
     public function showAddActivite() {

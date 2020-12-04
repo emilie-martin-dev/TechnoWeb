@@ -77,6 +77,13 @@ class View {
         return $menuDiv;
     }
 
+    public function getImagePath($imagePath) {
+        if($imagePath == null || $imagePath != null && empty($imagePath)) 
+            return "/img/placeholder.png";
+        else
+            return UPLOAD_PATH . $imagePath;
+    }
+
 
     public function makeAboutPage() {
         $title = "A propos";
@@ -90,7 +97,7 @@ class View {
         $desc = $this->escapeHtmlSpecialChars($activite->getDescription());
         $shortDesc = $this->escapeHtmlSpecialChars($activite->getShortDescription());
 
-        $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
+        $img = "<img src=\"" . $this->getImagePath($imgSrc) . "\" class=\"w12\"/>";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
 
         $commentairesDiv = "";
@@ -112,10 +119,11 @@ class View {
         include_once("template/activite/consulter.php");
     }
 
-    public function makeListActivitePage($activites) {
+    public function makeListActivitePage($activites, $imgsSrc) {
         $title = "Liste des activités";
 
         $listeActivitesDiv = "";
+        $i = 0;
         foreach($activites as $a) {
             $idActivites = $this->escapeHtmlSpecialChars($a->getId());
             $nomActivites = $this->escapeHtmlSpecialChars($a->getNom());
@@ -125,7 +133,7 @@ class View {
             $listeActivitesDiv .= "
                     <div class=\"row\">
                         <div class=\"col w4\">
-                           
+                            <img src=\"" . $this->getImagePath($imgsSrc[$i]) . "\" class=\"w12 photo\"/>
                         </div>
 
                         <div class=\"col w7\">
@@ -134,7 +142,8 @@ class View {
                         </div>
                     </div>
                     <hr/>";
-            }
+            $i++;
+        }
         
         include_once("template/activite/lister.php");
     }

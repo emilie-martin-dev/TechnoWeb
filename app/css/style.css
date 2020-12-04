@@ -245,8 +245,6 @@ footer{
 }
 
 footer img{
-    width: auto;
-    height: 100px;
     margin: 3%;
     
 }
@@ -262,4 +260,12 @@ body {
     padding: 16px;
     background-color: #ededed;
 
+}
+
+.photo {
+    max-width: 256px;
+    max-height: 256px;
+    width: auto;
+    height: auto;
+    text-align: center;
 }
