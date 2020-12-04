@@ -1,6 +1,7 @@
 <?php
 
 require_once("model/Activite.php");
+require_once("model/Comment.php");
 require_once("model/builder/BuilderActivite.php");
 require_once("model/builder/BuilderUtilisateur.php");
 require_once("model/builder/BuilderLogin.php");
@@ -75,19 +76,30 @@ class View {
         return $menuDiv;
     }
 
+
     public function makeAboutPage() {
         $title = "A propos";
 
         include_once("template/about/about.php");
     }
 
-    public function makeActivitePage(Activite $activite, $imgSrc) {
+    public function makeActivitePage(Activite $activite, $imgSrc, $comments, BuilderComment $builder) {
         $title = $activite->getNom();
         $lieu = $activite->getLieu();
         $desc = $activite->getDescription();
         $shortDesc = $activite->getShortDescription();
 
         $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
+        $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
+
+        $commentairesDiv = "";
+        foreach($comments as $c) {
+            $nomUtilisateur = $c->getUtilisateur()->getNom();
+            $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
+            $texte = $c->getTexte();
+            $commentairesDiv .= "<p>".$nomUtilisateur." ".$prenomUtilisateur." :</p><p>".$texte."</p><hr/>";
+        }
+        
 
         include_once("template/activite/consulter.php");
     }
@@ -95,6 +107,28 @@ class View {
     public function makeListActivitePage($activites) {
         $title = "Liste des activités";
 
+        $listeActivitesDiv = "";
+        foreach($activites as $a) {
+            $idActivites = $a->getId();
+            $nomActivites = $a->getNom();
+            $lieuActivites = $a->getLieu();
+            $shortDescriptionActivites = $a->getShortDescription();
+            
+            $listeActivitesDiv .= "
+                    <div class=\"row\">
+                        <div class=\"nomLister center-text col w12\">
+                            <p><a href=" . $this->router->getActiviteUrl($a->getId()) . ">" . $a->getNom() . "</a></p>
+                            <p class=\"littleSize\">". $a->getLieu() ."</p>
+                        </div>
+
+                        <div class=\"col w8\">
+                            <p>". $a->getShortDescription() ."</p>
+                        </div>
+                    </div>
+                    <hr/>";
+            $listeActivitesDiv .= "<p><a href='".$this->router->getActiviteUrl($idActivites)."'>".$nomActivites."</a> - ".$lieuActivites.": ".$shortDescriptionActivites."</p><hr/>";
+        }
+        
         include_once("template/activite/lister.php");
     }
 
@@ -134,7 +168,6 @@ class View {
 
         include_once("template/login/login.php");
     }
-
 
     public function makeConfigAdminFormPage(BuilderConfig $builder){
         $title = "Configuration";

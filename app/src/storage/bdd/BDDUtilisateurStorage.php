@@ -34,6 +34,16 @@ class BDDUtilisateurStorage implements IUtilisateurStorage {
 
         return $builder->create();
     }
+    
+    public function read($id) {
+        $sth = $this->bdd->prepare("SELECT * FROM UTILISATEUR WHERE ID = :id");
+        $sth->bindValue(":id", $id, PDO::PARAM_INT);
+        $sth->execute();
+
+        $builder = new BuilderUtilisateur($sth->fetch(PDO::FETCH_ASSOC));
+
+        return $builder->create();
+    }
 
     public function checkAuth($login, $password) {
         $sth = $this->bdd->prepare("SELECT * FROM UTILISATEUR WHERE LOGIN = :login");

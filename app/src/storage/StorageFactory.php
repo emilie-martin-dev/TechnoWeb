@@ -5,6 +5,7 @@ require_once("storage/bdd/BDDRoleStorage.php");
 require_once("storage/bdd/BDDPhotoStorage.php");
 require_once("storage/bdd/BDDUtilisateurStorage.php");
 require_once("storage/bdd/BDDConfigStorage.php");
+require_once("storage/bdd/BDDCommentStorage.php");
 
 class StorageFactory {
 
@@ -94,6 +95,16 @@ class StorageFactory {
             return new BDDConfigStorage($this->getBdd());
         } else {
             echo "Storage config en " . $store . " non disponible";
+        }
+    }
+
+    public function getCommentStorage($storageType=null) {
+        $store = ($storageType != null) ? $storageType : $this->storageType;
+
+        if($store == STORAGE_BDD) {
+            return new BDDCommentStorage($this->getBdd());
+        } else {
+            echo "Storage comment en " . $store . " non disponible";
             die();
         }
     }

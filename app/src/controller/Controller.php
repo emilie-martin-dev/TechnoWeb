@@ -3,6 +3,7 @@
 require_once("auth/AuthenticationManager.php");
 require_once("model/Activite.php");
 require_once("model/builder/BuilderActivite.php");
+require_once("model/builder/BuilderComment.php");
 require_once("model/builder/BuilderLogin.php");
 require_once("model/builder/BuilderConfig.php");
 require_once("storage/StorageFactory.php");
@@ -26,8 +27,15 @@ class Controller {
     public function showActivite($id) {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
+        $commentStorage = $factory->getCommentStorage();
+        $utilisateurStorage = $factory->getUtilisateurStorage();
 
         $activite = $activiteStorage->read($id);
+        $comments = $commentStorage->readByIdActivite($id);
+
+        foreach($comments as $c) {
+            $c->setUtilisateur($utilisateurStorage->read($c->getUtilisateur()->getId()));
+        }
 
         if($activite != null) {
             $photoStorage = $factory->getPhotoStorage();
@@ -38,9 +46,35 @@ class Controller {
                 $imgSrc = $imgs[0]->getChemin();
             }
 
-            $this->view->makeActivitePage($activite, $imgSrc);
+            $builderComment = $this->router->getFormData();
+            if($builderComment == null) {
+                $builderComment = new BuilderComment(array());
+                $builderComment->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
+            }
+
+            $this->view->makeActivitePage($activite, $imgSrc, $comments, $builderComment);
         } else {
             $this->view->make404Page();
+        }
+
+    }
+
+    public function addComment($id, array $data) {
+        $factory = StorageFactory::getInstance();
+        $commentStorage = $factory->getCommentStorage();
+
+        $authManager = new AuthenticationManager();
+
+        $builder = new BuilderComment($data);
+        $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
+        $builder->setAttribute(BuilderComment::FIELD_ID_UTILISATEUR, $authManager->getUser()->getId());
+
+        if($builder->isValid()) {
+            $commentStorage->create($builder->create());
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
+        } else {
+            $this->router->setFormData($builder);
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Formulaire invalide");
         }
     }
 
@@ -337,4 +371,5 @@ class Controller {
     public function showError404(){
         $this->view->make404Page();
     }
+    
 }

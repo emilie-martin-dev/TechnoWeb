@@ -20,7 +20,8 @@
     </div>
 </div>
 
-
 <?php
+    include_once("template/activite/comment.php");
+
     include("template/base/footer_html.php");
 ?>

@@ -37,6 +37,7 @@ class Router {
             "GET:/about" => array("about", array(), array()),
             "GET:/activite" => array("listActivites", array(), array()),
             "GET:/activite/[0-9]+" => array("showActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
+            "POST:/activite/[0-9]+/addComment" => array("addComment", array("1", $_POST), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/activite/add" => array("showAddActivite", array(), array(ROLE_USER, ROLE_ADMIN)),
             "POST:/activite/add" => array("addActivite", array($_POST), array(ROLE_USER, ROLE_ADMIN)),
             "GET:/activite/[0-9]+/delete" => array("showDeleteActivite", array("1"), array(ROLE_USER, ROLE_ADMIN)),
@@ -161,6 +162,10 @@ class Router {
 
     public function getActiviteSupprimerURL($id) {
         return "/activite/" . $id . "/delete";
+    }
+
+    public function getAddCommentURL($id) {
+        return "/activite/" . $id . "/addComment";
     }
 
     public function getLoginURL() {
