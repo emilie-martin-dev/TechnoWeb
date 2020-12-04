@@ -22,10 +22,7 @@ class BuilderPhoto extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid()) 
-            return null;
-        
+    public function createModel() {
         $p = new Photo();
         
         if(isset($this->data[BuilderPhoto::FIELD_ID]))

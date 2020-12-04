@@ -21,10 +21,7 @@ class BuilderConfig extends AbstractBuilder {
         ));
     }
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid())
-            return null;
-
+    public function createModel() {
         $c = new Config();
 
         if(isset($this->data[BuilderConfig::FIELD_ID]))
