@@ -20,7 +20,6 @@ class BuilderRole extends AbstractBuilder {
 	}
 
     public function createModel() {
-
         $r = new Role();
 
         if(isset($this->data[BuilderRole::FIELD_ID]))

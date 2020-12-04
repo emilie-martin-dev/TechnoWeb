@@ -21,7 +21,6 @@ class BuilderLogin extends AbstractBuilder {
 	}
 
     public function createModel() {
-
         $u = new Utilisateur();
 
         $u->setLogin($this->data[BuilderUtilisateur::FIELD_LOGIN]);

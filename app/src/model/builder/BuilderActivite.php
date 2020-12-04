@@ -28,7 +28,6 @@ class BuilderActivite extends AbstractBuilder {
 	}
 
     public function createModel() {
-
         $a = new Activite();
 
         if(isset($this->data[BuilderActivite::FIELD_ID]))
