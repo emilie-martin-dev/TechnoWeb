@@ -6,7 +6,7 @@ interface IConfigStorage {
 
     public function read($id);
 
-    public function readLibelle($libelle);
+    public function readByLibelle($libelle);
 
     public function updateValeurs($id, Config $config);
 

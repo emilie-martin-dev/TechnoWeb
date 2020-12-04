@@ -301,6 +301,12 @@ class Controller {
     }
 
     public function showLogin() {
+        $authManager = new AuthenticationManager();
+        if($authManager->isConnected()) {
+            $this->router->POSTRedirect($this->router->getIndexURL(), "");
+            return;
+        }
+
         $builder = $this->router->getFormData();
         if($builder == null) {
             $builder = new BuilderLogin(array());
@@ -314,7 +320,7 @@ class Controller {
         if($builder->isValid()) {
             $authManager = new AuthenticationManager();
 
-            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD))) {
+            if($authManager->connectUser($builder->getAttribute(BuilderLogin::FIELD_LOGIN), $builder->getAttribute(BuilderLogin::FIELD_PASSWORD), $builder->getAttribute(BuilderLogin::FIELD_STAY_CONNECTED))) {
                 $this->router->setFormData($builder);
                 $this->router->POSTRedirect($this->router->getIndexURL(), "Connexion réussie");
                 return;
@@ -346,7 +352,7 @@ class Controller {
             return;
         }
 
-        $config = $configStorage->readLibelle(CONFIG_COOKIE);
+        $config = $configStorage->readByLibelle(CONFIG_COOKIE);
 
         if($config->getLibelle() == null){
             $this->router->POSTRedirect($this->router->get404URL(), "Il n'y a pas de paramètre " . $config->getLibelle());

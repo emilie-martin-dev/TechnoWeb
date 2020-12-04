@@ -21,7 +21,7 @@ class BDDConfigStorage implements IConfigStorage {
         return $builder->create();
     }
 
-    public function readLibelle($libelle) {
+    public function readByLibelle($libelle) {
         $sth = $this->bdd->prepare("SELECT * FROM CONFIG WHERE LIBELLE = :libelle");
         $sth->bindValue(":libelle", $libelle);
         $sth->execute();

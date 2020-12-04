@@ -8,6 +8,7 @@ class BuilderLogin extends AbstractBuilder {
 
     const FIELD_LOGIN = "LOGIN";
     const FIELD_PASSWORD = "PASSWORD";
+    const FIELD_STAY_CONNECTED = "STAY_CONNECTED";
 
     public function __construct($data, $error = null) {
         parent::__construct($data, $error);

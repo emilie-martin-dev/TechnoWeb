@@ -144,7 +144,7 @@ td {
     text-align: center;
 }
 
-.form-center input,
+.form-center input:not([type=checkbox]), 
 .form-center label,
 .form-center textarea {
     display: block;
