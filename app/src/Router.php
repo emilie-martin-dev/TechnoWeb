@@ -187,4 +187,8 @@ class Router {
     public function getSignUpURL() {
         return "/sign_up";
     }
+
+    public function getAboutURL() {
+        return "/about";
+    }
 }

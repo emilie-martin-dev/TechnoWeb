@@ -55,6 +55,7 @@ class View {
         $menuDiv .= "<ul>";
         
         $menuDiv .= "<li><a href='" . $this->router->getActiviteListURL() . "'>Activités</a></li>";
+        $menuDiv .= "<li><a href='" . $this->router->getAboutURL() . "'>A propos</a></li>";
 
         $auth = new AuthenticationManager();
         if($auth->isConnected()) {
