@@ -60,7 +60,7 @@ class View {
         include_once("template/about/about.php");
     }
 
-    public function makeActivitePage(Activite $activite, $imgSrc, $comment, BuilderComment $builder) {
+    public function makeActivitePage(Activite $activite, $imgSrc, $comments, BuilderComment $builder) {
         $title = $activite->getNom();
         $lieu = $activite->getLieu();
         $desc = $activite->getDescription();
@@ -69,16 +69,14 @@ class View {
         $img = empty($imgSrc) ? "" : "<img src=\"" . UPLOAD_PATH . $imgSrc . "\" class=\"w12\"/>";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
 
-        $commentaire = "";
-
-        if($comment != null) {
-            foreach($comment as $c) {
-                $nomUtilisateur = $c->getUtilisateur()->getNom();
-                $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
-                $texte = $c->getTexte();
-                $commentaire .= "<p>".$nomUtilisateur." ".$prenomUtilisateur." a écrit:</p><br><p>".$texte."</p><br><hr/>";
-            }
+        $commentairesDiv = "";
+        foreach($comments as $c) {
+            $nomUtilisateur = $c->getUtilisateur()->getNom();
+            $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
+            $texte = $c->getTexte();
+            $commentairesDiv .= "<p>".$nomUtilisateur." ".$prenomUtilisateur." :</p><p>".$texte."</p><hr/>";
         }
+        
 
         include_once("template/activite/consulter.php");
     }
@@ -87,16 +85,14 @@ class View {
         $title = "Liste des activités";
 
         $listeActivites = "";
-        if($activites != null) {
-            foreach($activites as $a) {
-                $idActivites = $a->getId();
-                $nomActivites = $a->getNom();
-                $lieuActivites = $a->getLieu();
-                $shortDescriptionActivites = $a->getShortDescription();
-                $listeActivites .= "<p><a href='".$this->router->getActiviteUrl($idActivites)."'>".$nomActivites."</a> - ".$lieuActivites.": ".$shortDescriptionActivites."</p><hr/>";
-            }
+        foreach($activites as $a) {
+            $idActivites = $a->getId();
+            $nomActivites = $a->getNom();
+            $lieuActivites = $a->getLieu();
+            $shortDescriptionActivites = $a->getShortDescription();
+            $listeActivites .= "<p><a href='".$this->router->getActiviteUrl($idActivites)."'>".$nomActivites."</a> - ".$lieuActivites.": ".$shortDescriptionActivites."</p><hr/>";
         }
-
+        
         include_once("template/activite/lister.php");
     }
 

@@ -26,8 +26,15 @@ class Controller {
     public function showActivite($id) {
         $factory = StorageFactory::getInstance();
         $activiteStorage = $factory->getActiviteStorage();
+        $commentStorage = $factory->getCommentStorage();
+        $utilisateurStorage = $factory->getUtilisateurStorage();
 
         $activite = $activiteStorage->read($id);
+        $comments = $commentStorage->readByIdActivite($id);
+
+        foreach($comments as $c) {
+            $c->setUtilisateur($utilisateurStorage->read($c->getUtilisateur()->getId()));
+        }
 
         if($activite != null) {
             $photoStorage = $factory->getPhotoStorage();
@@ -38,37 +45,16 @@ class Controller {
                 $imgSrc = $imgs[0]->getChemin();
             }
 
-            $this->view->makeActivitePage($activite, $imgSrc, $this->showCommentaire($id), $this->showAddCommentaire($id));
+            $builderComment = $this->router->getFormData();
+            if($builderComment == null) {
+                $builderComment = new BuilderComment(array());
+                $builderComment->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
+            }
+
+            $this->view->makeActivitePage($activite, $imgSrc, $comments, $builderComment);
         } else {
             $this->view->make404Page();
         }
-    }
-
-    public function showCommentaire($id) {
-        $factory = StorageFactory::getInstance();
-        $commentStorage = $factory->getCommentStorage();
-
-        $comment = $commentStorage->readByIdActivite($id);
-
-        $utilisateurStorage = $factory->getUtilisateurStorage();
-
-        foreach($comment as $c) {
-            $utilisateurBDD = $utilisateurStorage->read($c->getUtilisateur()->getId());
-
-            $c->setUtilisateur($utilisateurBDD);
-        }
-
-        return $comment;
-    }
-
-    public function showAddCommentaire($id) {
-        $builder = $this->router->getFormData();
-        if($builder == null) {
-            $builder = new BuilderComment(array());
-            $builder->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
-        }
-
-        return $builder;
     }
 
     public function addComment($id, array $data) {

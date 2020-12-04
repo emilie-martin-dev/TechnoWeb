@@ -2,7 +2,7 @@
     include("template/base/header_html.php");
 ?>
 
-        <?= $listeActivites?>
+<?= $listeActivites?>
 
 <?php
     include("template/base/footer_html.php");

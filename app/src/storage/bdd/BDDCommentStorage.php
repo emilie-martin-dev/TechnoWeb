@@ -36,21 +36,6 @@ class BDDCommentStorage implements ICommentStorage {
         return $comment;
     }
 
-    public function readByIdUtilisateur($idUtilisateur) {
-        $sth = $this->bdd->prepare("SELECT * FROM COMMENTAIRE WHERE ID_UTILISATEUR  = :id_utilisateur");
-        $sth->bindValue(":id_utilisateur", $idUtilisateur, PDO::PARAM_INT);
-        $sth->execute();
-
-        $comment = array();
-
-        foreach($sth->fetchAll(PDO::FETCH_ASSOC) as $r) {
-            $builder = new BuilderComment($r);
-            $comment[] = $builder->create();
-        }
-
-        return $comment;
-    }
-
     public function create(Comment $c) {
         $sth = $this->bdd->prepare("INSERT INTO COMMENTAIRE VALUES(NULL, :texte, :id_activite, :id_utilisateur)");
         $sth->bindValue(":texte", $c->getTexte());
