@@ -71,7 +71,7 @@ class Controller {
 
         if($builder->isValid()) {
             $commentStorage->create($builder->create());
-            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Création réussie");
+            $this->router->POSTRedirect($this->router->getActiviteURL($id), "Commentaire ajouté");
         } else {
             $this->router->setFormData($builder);
             $this->router->POSTRedirect($this->router->getActiviteURL($id), "Formulaire invalide");
