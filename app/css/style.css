@@ -18,6 +18,9 @@
 nav {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
+    display: block;
+    width: 100%;
+    background-color: #4caf50;
 }
 
 nav ul {
@@ -32,7 +35,6 @@ nav ul li {
 
 nav ul li a {
     display: block;
-    background-color: #4caf50;
     color: white;
     text-align: center;
     padding: 14px 16px;
@@ -199,18 +201,13 @@ td {
     font-size: 1.8em;
 }
 
-#shortDesc {
+#description {
     margin: auto;
     word-wrap: break-word;
 }
 
-.description {
+#shortDesc {
     color: rgb(119, 136, 153);
-}
-
-.nomLister{
-    background-color: #DFDFDF;
-    font-size: 1.2em;
 }
 
 .nomLister a{
@@ -228,10 +225,15 @@ td {
     text-decoration:none;
 }
 
-.littleSize{
-    font-size: 0.8em;
+#espace-com {
+    margin-top: 1.5em;
+    margin: auto;
+    width: 80%;
 }
 
+#espace-com .titre {
+    font-weight: bold;
+}
 
 footer{
     width: 100%;
@@ -243,12 +245,6 @@ footer img{
     height: 100px;
     margin: 3%;
     
-}
-
-.boutonHeader a{
-    text-decoration:none;
-    color: black;
-    font-style: italic;
 }
 
 html{

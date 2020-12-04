@@ -52,7 +52,7 @@ class Controller {
                 $builderComment->setAttribute(BuilderComment::FIELD_ID_ACTIVITE, $id);
             }
 
-            $this->view->makeActivitePage($activite, $imgSrc, $comments, $builderComment);
+            $this->view->makeActivitePage($activite, $imgSrc, $comments, $builderComment, $this->isUserActivityOwner($activite));
         } else {
             $this->view->make404Page();
         }

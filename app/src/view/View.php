@@ -83,7 +83,7 @@ class View {
         include_once("template/about/about.php");
     }
 
-    public function makeActivitePage(Activite $activite, $imgSrc, $comments, BuilderComment $builder) {
+    public function makeActivitePage(Activite $activite, $imgSrc, $comments, BuilderComment $builder, $isActiviteOwner) {
         $title = $activite->getNom();
         $lieu = $activite->getLieu();
         $desc = $activite->getDescription();
@@ -97,9 +97,15 @@ class View {
             $nomUtilisateur = $c->getUtilisateur()->getNom();
             $prenomUtilisateur = $c->getUtilisateur()->getPrenom();
             $texte = $c->getTexte();
-            $commentairesDiv .= "<p>".$nomUtilisateur." ".$prenomUtilisateur." :</p><p>".$texte."</p><hr/>";
+            $commentairesDiv .= "<div class=\"comment\"><p>".$nomUtilisateur." ".$prenomUtilisateur." :</p><p>".$texte."</p></div><hr/>";
         }
         
+        $actions = "";
+        if($isActiviteOwner) {
+            $actions .= "<p><a href=" . $this->router->getActiviteUploadPictureURL($activite->getId()) . ">Upload</a></p>";
+            $actions .= "<p><a href=" . $this->router->getActiviteModifURL($activite->getId()) . ">Modifier</a></p>";
+            $actions .= "<p><a href=" . $this->router->getActiviteSupprimerURL($activite->getId()) . ">Supprimer</a></p>";
+        }
 
         include_once("template/activite/consulter.php");
     }
@@ -116,18 +122,17 @@ class View {
             
             $listeActivitesDiv .= "
                     <div class=\"row\">
-                        <div class=\"nomLister center-text col w12\">
-                            <p><a href=" . $this->router->getActiviteUrl($a->getId()) . ">" . $a->getNom() . "</a></p>
-                            <p class=\"littleSize\">". $a->getLieu() ."</p>
+                        <div class=\"col w4\">
+                           
                         </div>
 
-                        <div class=\"col w8\">
+                        <div class=\"col w7\">
+                            <p><a href=" . $this->router->getActiviteUrl($a->getId()) . ">" . $a->getNom() . " - " . $a->getLieu() ."</a></p>
                             <p>". $a->getShortDescription() ."</p>
                         </div>
                     </div>
                     <hr/>";
-            $listeActivitesDiv .= "<p><a href='".$this->router->getActiviteUrl($idActivites)."'>".$nomActivites."</a> - ".$lieuActivites.": ".$shortDescriptionActivites."</p><hr/>";
-        }
+            }
         
         include_once("template/activite/lister.php");
     }

@@ -1,10 +1,13 @@
-<p>Espace commentaires</p>
+<div id="espace-com">
 
-<form action="<?= $urlAction?>" method="POST">
-	<label for="<?= BuilderComment::FIELD_TEXTE?>">Commentaire</label>
-    <input name="<?= BuilderComment::FIELD_TEXTE?>" placeholder="Donnez votre avis !" id="<?= BuilderComment::FIELD_TEXTE?>"/>
-    
-    <input type="submit" value="Valider"/>
-</form>
+    <p class="titre">Espace commentaires</p>
 
-<?= $commentairesDiv ?>
+    <form action="<?= $urlAction?>" method="POST">
+        <label for="<?= BuilderComment::FIELD_TEXTE?>">Commentaire</label>
+        <input name="<?= BuilderComment::FIELD_TEXTE?>" placeholder="Donnez votre avis !" id="<?= BuilderComment::FIELD_TEXTE?>"/>
+        
+        <input type="submit" value="Valider"/>
+    </form>
+
+    <?= $commentairesDiv ?>
+</div>

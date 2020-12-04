@@ -4,18 +4,16 @@
 
 <h1 class="center-text"><?= $title?></h1>
 
-<p class="description"><?= $shortDesc?></p>
+<p id="shortDesc"><?= $shortDesc?></p>
 
 <div class="row">
     <div class="col w3">
         <?= $img ?>
 
-        <p><a href="<?= $this->router->getActiviteUploadPictureURL($activite->getId())?>">Upload</a></p>
-        <p><a href="<?= $this->router->getActiviteModifURL($activite->getId())?>">Modifier</a></p>
-        <p><a href="<?= $this->router->getActiviteSupprimerURL($activite->getId())?>">Supprimer</a></p>
+        <?= $actions ?>
     </div>
 
-    <div class="col w8" id="shortDesc">
+    <div class="col w8" id="description">
         <p><?= $desc ?></p>
     </div>
 </div>

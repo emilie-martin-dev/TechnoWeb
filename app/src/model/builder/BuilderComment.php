@@ -23,10 +23,7 @@ class BuilderComment extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid())
-            return null;
-
+    public function createModel() {
         $c = new Comment();
 
         if(isset($this->data[BuilderComment::FIELD_ID]))
