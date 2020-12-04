@@ -6,8 +6,8 @@ require_once("model/Role.php");
 
 class BuilderLogin extends AbstractBuilder {
 
-    const FIELD_LOGIN = "LOGIN"; 
-    const FIELD_PASSWORD = "PASSWORD"; 
+    const FIELD_LOGIN = "LOGIN";
+    const FIELD_PASSWORD = "PASSWORD";
 
     public function __construct($data, $error = null) {
         parent::__construct($data, $error);
@@ -20,10 +20,7 @@ class BuilderLogin extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid())
-            return null;
-        
+    public function createModel() {
         $u = new Utilisateur();
 
         $u->setLogin($this->data[BuilderUtilisateur::FIELD_LOGIN]);
@@ -31,7 +28,7 @@ class BuilderLogin extends AbstractBuilder {
 
         return $u;
     }
-    
+
     public function isValid() {
         $this->error = array();
 

@@ -5,12 +5,12 @@ require_once("model/Activite.php");
 
 class BuilderActivite extends AbstractBuilder {
 
-    const FIELD_ID = "ID"; 
-    const FIELD_NOM = "NOM"; 
-    const FIELD_LIEU = "LIEU"; 
-    const FIELD_SHORT_DESCRIPTION = "SHORT_DESCRIPTION"; 
-    const FIELD_DESCRIPTION = "DESCRIPTION"; 
-    const FIELD_ID_UTILISATEUR = "ID_UTILISATEUR"; 
+    const FIELD_ID = "ID";
+    const FIELD_NOM = "NOM";
+    const FIELD_LIEU = "LIEU";
+    const FIELD_SHORT_DESCRIPTION = "SHORT_DESCRIPTION";
+    const FIELD_DESCRIPTION = "DESCRIPTION";
+    const FIELD_ID_UTILISATEUR = "ID_UTILISATEUR";
 
     public function __construct($data, $error = null) {
         parent::__construct($data, $error);
@@ -27,15 +27,12 @@ class BuilderActivite extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid()) 
-            return null;
-        
+    public function createModel() {
         $a = new Activite();
-        
+
         if(isset($this->data[BuilderActivite::FIELD_ID]))
             $a->setId($this->data[BuilderActivite::FIELD_ID]);
-            
+
         $a->setNom($this->data[BuilderActivite::FIELD_NOM]);
         $a->setLieu($this->data[BuilderActivite::FIELD_LIEU]);
         $a->setDescription($this->data[BuilderActivite::FIELD_DESCRIPTION]);
@@ -44,14 +41,14 @@ class BuilderActivite extends AbstractBuilder {
 
         return $a;
     }
-    
+
     public function isValid() {
         $this->error = array();
 
         if(isset($this->data[BuilderActivite::FIELD_ID]) && !is_numeric($this->data[BuilderActivite::FIELD_ID])) {
             $this->error[BuilderActivite::FIELD_ID] = "La valeur de l'id est incorrect";
         }
-        
+
         if(empty($this->data[BuilderActivite::FIELD_NOM])) {
             $this->error[BuilderActivite::FIELD_NOM] = "Le nom est obligatoire";
         }

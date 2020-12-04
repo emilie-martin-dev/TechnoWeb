@@ -28,10 +28,7 @@ class BuilderUtilisateur extends AbstractBuilder {
 		));
 	}
 
-    public function create() {
-        if($this->data == null || $this->data != null && !$this->isValid())
-            return null;
-
+    public function createModel() {
         $u = new Utilisateur();
 
         if(isset($this->data[BuilderUtilisateur::FIELD_ID]))

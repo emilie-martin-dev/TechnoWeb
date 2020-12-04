@@ -10,8 +10,15 @@ abstract class AbstractBuilder {
         $this->error = $error;
     }
 
-    public abstract function create();
-    
+    public function create(){
+        if($this->data == null || $this->data != null && !$this->isValid())
+            return null;
+
+        return $this->createModel();
+    }
+
+    public abstract function createModel();
+
     public abstract function isValid();
 
     public function getAttribute($name) {
@@ -25,7 +32,7 @@ abstract class AbstractBuilder {
     public function getData() {
         return $this->data;
     }
-    
+
     public function getError() {
         return $this->error;
     }
