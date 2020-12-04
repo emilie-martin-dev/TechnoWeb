@@ -8,41 +8,43 @@
 
 <p>Numéro de groupe : 17</p> 
 
-<table>
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Num étudiant</th>
-        </tr>
-    </thead>
+<div class="w10 center">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Num étudiant</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        <tr>
-            <td>BISSOMBOLO</td>
-            <td>Siega</td>
-            <td>21814220</td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>BISSOMBOLO</td>
+                <td>Siega</td>
+                <td>21814220</td>
+            </tr>
 
-        <tr>
-            <td>DEROUIN</td>
-            <td>Auréline</td>
-            <td>21806986</td>
-        </tr>
+            <tr>
+                <td>DEROUIN</td>
+                <td>Auréline</td>
+                <td>21806986</td>
+            </tr>
 
-        <tr>
-            <td>FLAMBARD</td>
-            <td>Théo</td>
-            <td>21708078</td>
-        </tr>
+            <tr>
+                <td>FLAMBARD</td>
+                <td>Théo</td>
+                <td>21708078</td>
+            </tr>
 
-        <tr>
-            <td>MARTIN</td>
-            <td>Justine</td>
-            <td>21909920</td>
-        </tr>
-    </tbody>
-</table>
+            <tr>
+                <td>MARTIN</td>
+                <td>Justine</td>
+                <td>21909920</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <h2>Liste des points réalisés</h2>
 
@@ -58,259 +60,261 @@
 
 <h2>Répartition des tâches dans le groupe</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>Libellé</th>
-            <th>BISSOMBOLO Siega</th>
-            <th>DEROUIN Auréline</th>
-            <th>FLAMBARD Théo</th>
-            <th>MARTIN Justine</th>
-        </tr>
-    </thead>
+<div class="w10 center">
+    <table>
+        <thead>
+            <tr>
+                <th>Libellé</th>
+                <th>BISSOMBOLO Siega</th>
+                <th>DEROUIN Auréline</th>
+                <th>FLAMBARD Théo</th>
+                <th>MARTIN Justine</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        <tr>
-            <td>Présence aux réunions</td>
-            <td></td>
-            <td>X</td>
-            <td>Retard</td>
-            <td>X</td>
-        </tr>
+        <tbody>
+            <tr>
+                <td>Présence aux réunions</td>
+                <td></td>
+                <td>X</td>
+                <td>Retard</td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Mise en commun du code des TP 12 à 16</td>
-            <td></td>
-            <td>X</td>
-            <td>X</td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Mise en commun du code des TP 12 à 16</td>
+                <td></td>
+                <td>X</td>
+                <td>X</td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Une seule connexion à la BDD</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Une seule connexion à la BDD</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Factory pour la création des IStorage en "Stub" ou "BDD"</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Factory pour la création des IStorage en "Stub" ou "BDD"</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Meilleure gestions des urls (suppression du bloc de if)</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Meilleure gestions des urls (suppression du bloc de if)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Système de vérification du role utilisateur avant d'accéder à une page</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Système de vérification du role utilisateur avant d'accéder à une page</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Redirection d'une page en POST vers GET</td>
-            <td></td>
-            <td></td>
-            <td>*</td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Redirection d'une page en POST vers GET</td>
+                <td></td>
+                <td></td>
+                <td>*</td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Possibilité de se connecter au site</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Possibilité de se connecter au site</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Gestion de la durée de validité d'un cookie en tant qu'admin</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Gestion de la durée de validité d'un cookie en tant qu'admin</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Rester connecté selon la durée du cookie</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Rester connecté selon la durée du cookie</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Possibilté de s'inscrire sur le site</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Possibilté de s'inscrire sur le site</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Ajout d'une activité en fonction de l'utilisateur connecté</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Ajout d'une activité en fonction de l'utilisateur connecté</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Modification ou suppression d'une activité seulement si l'utilisateur connecté en est l'auteur ou est admin</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Modification ou suppression d'une activité seulement si l'utilisateur connecté en est l'auteur ou est admin</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Possibilité de supprimer une activité</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Possibilité de supprimer une activité</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Possibilité d'ajouter et de modifier des photos pour une activité</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Possibilité d'ajouter et de modifier des photos pour une activité</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Ajout de commentaire sur une activité</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Ajout de commentaire sur une activité</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Système de "template" réutilisable</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Système de "template" réutilisable</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Conception du CSS</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Conception du CSS</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Design du template de base (header, menu, footer, ...)</td>
-            <td></td>
-            <td></td>
-            <td>Menu *</td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design du template de base (header, menu, footer, ...)</td>
+                <td></td>
+                <td></td>
+                <td>Menu *</td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Afficher le message de feedback</td>
-            <td></td>
-            <td></td>
-            <td>*</td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Afficher le message de feedback</td>
+                <td></td>
+                <td></td>
+                <td>*</td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Afficher les erreurs du formulaire</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
+            <tr>
+                <td>Afficher les erreurs du formulaire</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
 
-        <tr>
-            <td>Design de la page de listing des activités</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page de listing des activités</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page 404</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page 404</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page d'accueil</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page d'accueil</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page de consultation d'une activité</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page de consultation d'une activité</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page de formulaire des activités</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page de formulaire des activités</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page de login</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page de login</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page d'inscription</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page d'inscription</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page de configuration du cookie</td>
-            <td></td>
-            <td>X</td>
-            <td></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>Design de la page de configuration du cookie</td>
+                <td></td>
+                <td>X</td>
+                <td></td>
+                <td></td>
+            </tr>
 
-        <tr>
-            <td>Design de la page à propos</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>X</td>
-        </tr>
-    </tbody>
-</table>
+            <tr>
+                <td>Design de la page à propos</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>X</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <p>* fait dans ses TP mais pas adaptable simplement au code du projet repris ou nécessitant des améliorations importantes. Une réécriture était nécessaire.</p>
 
@@ -330,7 +334,7 @@
 
 <p>Pour permettre une communication au seins du groupe efficace, nous avons décidé d'utiliser Discord. Cela nous a permis de faire des réunions à l'oral, des partages d'écran ainsi que de se tenir informer de l'avancé du projet par différents salons textuels. Plusieurs rappels incitant au travail y ont d'ailleurs été fait.</p>
 
-<img src="/img/about/discord.png"/>
+<img class="col w3 center" src="/img/about/discord.png"/>
 
 <p>Voici une courte explication pour les différents salons textuels</p>
 <ul>
@@ -344,7 +348,7 @@
 
 <p>Nous avons également décidé d'utiliser Trello, ce qui nous a permis d'avoir une vue d'ensemble des différentes taches à effectuer. Chacun pouvait prendre une tache et la réaliser de son côté sans aucun problème. Bien entendu, en cas de difficulté, les salons Discord étaient là pour aider.</p>
 
-<img src="/img/about/trello.png"/>
+<img class="col w10 center"  src="/img/about/trello.png"/>
 
 <?php
     include("template/base/footer_html.php");
