@@ -19,8 +19,7 @@
                 <?=$a->getShortDescription()?>
             </p>
         </div>
-            <hr/>
-
+        <hr/>
     </div>
 <?php
     }

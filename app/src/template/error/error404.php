@@ -3,10 +3,10 @@
 ?>
 <div class="row center-text">
     <div class="col w12">
-        <h1 class="error-block"><?= $title?></h1>
+        <h1>Erreur 404</h1>
     </div>
     <div class="col w12">
-        <p class="textBold"><?= $content?></p>
+        <p>La page demandée n'a pas été trouvée</p>
     </div>
 
 

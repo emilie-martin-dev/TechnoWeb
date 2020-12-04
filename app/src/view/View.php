@@ -21,9 +21,6 @@ class View {
     }
 
     public function make404Page() {
-        $title = "Error 404";
-        $content = "Oups ! Cette page ne vous est pas autorisé !";
-
         include_once("template/error/error404.php");
     }
 
@@ -50,6 +47,32 @@ class View {
         }
 
         return $feedbackDiv;
+    }
+    
+    public function getMenu(){
+        $menuDiv = "<nav>";
+        $menuDiv .= "<ul>";
+        
+        $menuDiv .= "<li><a href='" . $this->router->getActiviteListURL() . "'>Activités</a></li>";
+
+        $auth = new AuthenticationManager();
+        if($auth->isConnected()) {
+            $menuDiv .= "<li><a href='" . $this->router->getActiviteCreationURL() . "'>Ajouter une activité</a></li>";
+
+            if($auth->isAdmin()) {                
+                $menuDiv .= "<li><a href='" . $this->router->getConfigAdminURL() . "'>Configuration</a></li>";
+            }
+            
+            $menuDiv .= "<li><a href='" . $this->router->getLogoutURL() . "'>Déconnexion</a></li>";
+        } else {            
+            $menuDiv .= "<li><a href='" . $this->router->getLoginURL() . "'>Connexion</a></li>";
+            $menuDiv .= "<li><a href='" . $this->router->getSignUpURL() . "'>Inscription</a></li>";
+        }        
+
+        $menuDiv .= "</ul>";
+        $menuDiv .= "</nav>";
+
+        return $menuDiv;
     }
 
     public function makeAboutPage() {

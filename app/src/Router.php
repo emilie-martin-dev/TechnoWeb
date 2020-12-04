@@ -52,7 +52,7 @@ class Router {
             "POST:/updateConfigAdmin/[0-9]+" => array("updateConfigAdmin", array("1",$_POST), array(ROLE_ADMIN)),
             "GET:/sign_up" => array("showSign_up", array(), array()),
             "POST:/sign_up" => array("sign_up", array($_POST), array()),
-            "GET:/404" => array("error404", array(), array())
+            "GET:/404" => array("showError404", array(), array())
         ];
 
         $ctrl = $this->generateControler();
@@ -182,19 +182,4 @@ class Router {
     public function getSignUpURL() {
         return "/sign_up";
     }
-
-    public function getMenu(){
-        $auth = new AuthenticationManager();
-        if($auth->isConnected()){
-            $affiche = "<p><a href=".$this->getLogoutURL().">Se deconnecter</a></p>";
-            if($auth->isAdmin()){
-                $affiche = $affiche."<p><a href=".$this->getConfigAdminURL().">Paramètre administrateur</a></p>";
-            }
-
-            return $affiche;
-        }else{
-            return "<p><a href=".$this->getSignUpURL().">S'inscrire</a></p> <p><a href=".$this->getLoginURL().">Se connecter</a></p>";
-        }
-    }
-
 }
