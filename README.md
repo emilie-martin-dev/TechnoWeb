@@ -11,7 +11,7 @@ Vous devez réaliser, un mini-site qui présente des « choses » que vous allez
 Le projet comporte les dossiers suivants :
 - app → Contient le code source de l'application
 - doc → Regroupe les différents documents importants du projet
-- scripts → Contient différents scripts pour gérer le projet
+- sql → Contient différents scripts pour gérer la BDD
 
 # Collaborateurs
 
@@ -19,5 +19,5 @@ Le projet étant réalisé en groupe, voici la liste des personnes affectées su
 
 - Justine MARTIN 21909920 ([@jmartin-pro](https://github.com/jmartin-pro))
 - Auréline DEROUIN 21806986 ([@Norah72](https://github.com/Norah72))
-- Siega BISSOMBOLO 21814220 ([@](https://github.com/))
-- Theo FLAMBARD 21708078 ([@](https://github.com/))
+- Siega BISSOMBOLO 21814220 (pas de commit)
+- Theo FLAMBARD 21708078 (pas de commit)
