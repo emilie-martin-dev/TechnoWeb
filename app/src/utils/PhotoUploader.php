@@ -31,7 +31,7 @@ class PhotoUploader {
         IMAGETYPE_WBMP => ".wbmp",
         IMAGETYPE_XBM => ".xbm",
         IMAGETYPE_ICO => ".ico",
-        IMAGETYPE_WEBP => ".webp"
+//        IMAGETYPE_WEBP => ".webp"    <- Non dispo sur PHP 7.0
     ];
 
     private $file;

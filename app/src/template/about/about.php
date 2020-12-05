@@ -348,7 +348,7 @@
 
 <p>Pour permettre une communication au seins du groupe efficace, nous avons décidé d'utiliser Discord. Cela nous a permis de faire des réunions à l'oral, des partages d'écran ainsi que de se tenir informer de l'avancé du projet par différents salons textuels. Plusieurs rappels incitant au travail y ont d'ailleurs été fait.</p>
 
-<img class="col w3 center" alt="Le serveur Discord" src="/img/about/discord.png"/>
+<img class="col w3 center" alt="Le serveur Discord" src="<?= URL_BASE ?>img/about/discord.png"/>
 
 <p>Voici une courte explication pour les différents salons textuels</p>
 <ul>
@@ -362,7 +362,7 @@
 
 <p>Nous avons également décidé d'utiliser Trello, ce qui nous a permis d'avoir une vue d'ensemble des différentes taches à effectuer. Chacun pouvait prendre une tache et la réaliser de son côté sans aucun problème. Bien entendu, en cas de difficulté, les salons Discord étaient là pour aider.</p>
 
-<img class="col w10 center" alt="Le tableau Trello" src="/img/about/trello.png"/>
+<img class="col w10 center" alt="Le tableau Trello" src="<?= URL_BASE ?>img/about/trello.png"/>
 
 <?php
     include("template/base/footer_html.php");

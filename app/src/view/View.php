@@ -79,9 +79,9 @@ class View {
 
     public function getImagePath($imagePath) {
         if($imagePath == null || $imagePath != null && empty($imagePath)) 
-            return "/img/placeholder.png";
+            return URL_BASE."img/placeholder.png";
         else
-            return UPLOAD_PATH . $imagePath;
+            return URL_BASE . UPLOAD_PATH . $imagePath;
     }
 
 

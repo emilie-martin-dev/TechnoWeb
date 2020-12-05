@@ -136,70 +136,70 @@ class Router {
     }
 
     public function getIndexURL() {
-        return "/";
+        return URL_BASE."index.php/";
     }
 
     public function get404URL() {
-        return "/404";
+        return URL_BASE."index.php/404";
     }
 
     public function getActiviteListURL() {
-        return "/activite";
+        return URL_BASE."index.php/activite";
     }
 
     public function getActiviteURL($id) {
-        return "/activite/" . $id;
+        return URL_BASE."index.php/activite/" . $id;
     }
 
     public function getActiviteCreationURL() {
-        return "/activite/add";
+        return URL_BASE."index.php/activite/add";
     }
 
     public function getActiviteModifURL($id) {
-        return "/activite/" . $id . "/update";
+        return URL_BASE."index.php/activite/" . $id . "/update";
     }
 
     public function getActiviteUploadPictureURL($id) {
-        return "/activite/" . $id . "/upload";
+        return URL_BASE."index.php/activite/" . $id . "/upload";
     }
 
     public function getActivitePictureURL($id) {
-        return "/activite/" . $id . "/pictures";
+        return URL_BASE."index.php/activite/" . $id . "/pictures";
     }
 
     public function getPictureDeleteURL($idPhoto) {
-        return "/pictures/" . $idPhoto . "/delete";
+        return URL_BASE."index.php/pictures/" . $idPhoto . "/delete";
     }
 
     public function getActiviteSupprimerURL($id) {
-        return "/activite/" . $id . "/delete";
+        return URL_BASE."index.php/activite/" . $id . "/delete";
     }
 
     public function getAddCommentURL($id) {
-        return "/activite/" . $id . "/addComment";
+        return URL_BASE."index.php/activite/" . $id . "/addComment";
     }
 
     public function getLoginURL() {
-        return "/login";
+        return URL_BASE."index.php/login";
     }
 
     public function getLogoutURL() {
-        return "/logout";
+        return URL_BASE."index.php/logout";
     }
 
     public function getConfigAdminURL(){
-        return "/configAdmin";
+        return URL_BASE."index.php/configAdmin";
     }
 
     public function getUpdateConfigURL($id){
-        return "/updateConfigAdmin/".$id;
+        return URL_BASE."index.php/updateConfigAdmin/".$id;
     }
 
     public function getSignUpURL() {
-        return "/sign_up";
+        return URL_BASE."index.php/sign_up";
     }
 
     public function getAboutURL() {
-        return "/about";
+        return URL_BASE."index.php/about";
     }
 }
