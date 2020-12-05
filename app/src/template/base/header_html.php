@@ -3,6 +3,7 @@
     <head>
         <title><?= empty($title) ? WEBSITE_DEFAULT_NAME : $title . " - " . WEBSITE_DEFAULT_NAME?></title>
         <link rel="stylesheet" href="<?= URL_BASE ?>css/style.css">
+        <meta charset="UTF-8">
     </head>
 
     <body class="container">
