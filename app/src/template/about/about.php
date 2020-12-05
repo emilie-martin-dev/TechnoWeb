@@ -102,7 +102,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -140,9 +140,9 @@
             <tr>
                 <td>Gestion de la durée de validité d'un cookie en tant qu'admin</td>
                 <td></td>
-                <td>X</td>
                 <td></td>
                 <td></td>
+                <td>Pas complet</td>
             </tr>
 
             <tr>
@@ -186,11 +186,11 @@
             </tr>
 
             <tr>
-                <td>Possibilité d'ajouter et de modifier des photos pour une activité</td>
+                <td>Possibilité d'ajouter et de supprimer des photos pour une activité</td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -220,9 +220,9 @@
             <tr>
                 <td>Design du template de base (header, menu, footer, ...)</td>
                 <td></td>
+                <td>X</td>
                 <td></td>
-                <td>Menu *</td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -244,23 +244,15 @@
             <tr>
                 <td>Design de la page de listing des activités</td>
                 <td></td>
+                <td>X</td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
                 <td>Design de la page 404</td>
                 <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td>Design de la page d'accueil</td>
-                <td></td>
-                <td></td>
+                <td>X</td>
                 <td></td>
                 <td></td>
             </tr>
@@ -270,7 +262,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -278,7 +270,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -286,7 +278,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td>X</td>
             </tr>
 
             <tr>
@@ -324,7 +316,29 @@
 
 <h2>Choix de design et de code</h2>
 
+<h3>StorageFactory</h3>
 
+<p>La StorageFactory est, comme son nom l'indique, une factory qui permet la création de chaque Storage selon un type demandé (fournit en paramètre ou défini de manière globale). Il existe deux types de storage pour le moment, ceux utilisant un storage en Stub et l'autre en BDD (tous les storages en stub n'existent pas pour le moment). L'avantage de cette classe est que, comme elle utilise un singleton, on peut créer nos Storage de n'importe où, mais aussi et surtout, la connexion à la BDD ne se fait qu'une seule fois et seulement si besoin. On peut ainsi récupérer la factory et demander la création d'un storage pour les utilisateurs par exemple. On nottera aussi que, concernant le type de storage voulu, il est possible de le définir de manière globale grâce à la méthode "setStorageType" en passant, au choix, STORAGE_BDD ou STORAGE_STUB (c'est ce qui est fait dans "index.php").</p>
+
+<h3>PhotoUploader</h3>
+
+<p>Pour la gestion de l'upload d'une image, nous avons décidé de créer une classe plutot que de mettre le code dans une méthode du controlleur, code, qui se retrouverai dupliqué si l'on a besoin d'uploader une fois de plus des images (pour la photo de profil par exemple). Cette classe va se charger de gérer aussi bien les erreurs que la sauvegarde du fichier en local.</p>
+
+<h3>Router</h3>
+
+<p>Le routeur à complètement été revu pour appeller dynamiquement la bonne méthode du controlleur suivant l'url. Cela simplifie grandement la gestion des urls car on n'a plus un amas de if. Le routeur à également pour role de gérer le formulaire entre les pages, les feedback et peut être récupéré de n'importe où grace à un singleton.</p>
+
+<h3>Builder</h3>
+
+<p>Pour les builder, nous avons décidé d'utiliser le nom des champs de la BDD comme valeur pour les constantes. Ce qui nous permet de transformer facilement un enregistrement de la BDD en un objet suite à un select. Les builder ont donc un rôle important dans notre projet car ils permettent à la fois de transformer en un objet correct un élément de la BDD mais aussi d'un Formulaire.</p>
+
+<h3>View et template</h3>
+
+<p>Contrairement à ce qui a pu être fait en cours, nous avons décidé de ne pas mélanger code php et html. Ainsi, tous le code de nos pages html est contenu dans un dossier template et ne contient que des "echo" de variables php. Le dossier "base" contient deux fichiers contenant le code de l'header html, pour l'un, et le code du footer html pour l'autre. Ces deux fichiers seront ainsi inclu sur chacune de nos page html. La classe view se charge uniquement de préparer les différentes variables pour les template et d'inclure le bon template correspondant à la vue.</p>
+
+<h3>Constantes et crédentials</h3>
+
+<p>Les constantes sont réparties en deux fichiers distincts tous deux à la racine du dossier src/. Le premier, const.php, définit toutes les constantes relatives au site. Le nom des roles, le chemin du dossier d'upload, etc. Le deuxième, credentials.php, donne toutes les informations relatives à la connexion pour la bdd.</p>
 
 <h2>Points à signaler</h2>
 
