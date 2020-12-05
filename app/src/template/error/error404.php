@@ -8,6 +8,7 @@
     <div class="col w12">
         <p>La page demandée n'a pas été trouvée</p>
     </div>
+</div>
 
 
 <?php

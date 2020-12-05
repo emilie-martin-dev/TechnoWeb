@@ -97,7 +97,7 @@ class View {
         $desc = $this->escapeHtmlSpecialChars($activite->getDescription());
         $shortDesc = $this->escapeHtmlSpecialChars($activite->getShortDescription());
 
-        $img = "<img src=\"" . $this->getImagePath($imgSrc) . "\" class=\"w12\"/>";
+        $img = "<img src=\"" . $this->getImagePath($imgSrc) . "\" alt='".$title."' class=\"w12\"/>";
         $urlAction = $this->router->getAddCommentUrl($builder->getAttribute(BuilderComment::FIELD_ID_ACTIVITE));
 
         $commentairesDiv = "";
@@ -122,7 +122,7 @@ class View {
     }
 
     public function makePictureActivitePage(Activite $activite, $imgs, $isActiviteOwner) {
-        $title = $activite->getNom() . " - Photos";
+        $title = $this->escapeHtmlSpecialChars($activite->getNom()) . " - Photos";
 
         $activiteUrl = $this->router->getActiviteURL($activite->getId());
 
@@ -130,12 +130,12 @@ class View {
         foreach($imgs as $img) {
             $listePhotoDiv .= "
                     <div class='col w5'>
-                    <img src=\"" . $this->getImagePath($img->getChemin()) . "\" class=\"w12\"/>";
+                    <img src=\"" . $this->getImagePath($img->getChemin()) . "\" alt='".$this->escapeHtmlSpecialChars($activite->getNom())."' class=\"w12\"/>";
             
             if($isActiviteOwner)
                 $listePhotoDiv .= "
-                        <a href='" . $this->router->getPictureDeleteURL($img->getId()) . "'>Supprimer</a>
-                        </div>";
+                        <a href='" . $this->router->getPictureDeleteURL($img->getId()) . "'>Supprimer</a>";
+            $listePhotoDiv .= "</div>";
         } 
 
         include_once("template/activite/photos.php");
@@ -162,7 +162,7 @@ class View {
             $listeActivitesDiv .= "
                     <div class=\"row\">
                         <div class=\"col w4\">
-                            <img src=\"" . $this->getImagePath($imgsSrc[$i]) . "\" class=\"w12 photo\"/>
+                            <img src=\"" . $this->getImagePath($imgsSrc[$i]) . "\" alt='".$nomActivites."' class=\"w12 photo\"/>
                         </div>
 
                         <div class=\"col w7\">
