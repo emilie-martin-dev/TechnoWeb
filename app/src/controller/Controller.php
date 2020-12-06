@@ -162,6 +162,7 @@ class Controller {
         if($builder == null) {
             $builder = BuilderActivite::buildFromActivite($activite);
         }
+        $builder->setAttribute(BuilderActivite::FIELD_ID, $activite->getId());
 
         $this->view->makeActiviteFormPage($builder, true);
     }
