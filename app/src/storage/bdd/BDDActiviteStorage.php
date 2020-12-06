@@ -69,10 +69,17 @@ class BDDActiviteStorage implements IActiviteStorage {
         $sth->execute();
     }
 
-    public function delete($id) {
+    public function delete($id) {        
+        $sth = $this->bdd->prepare("DELETE FROM PHOTO WHERE ID_ACTIVITE=:id");
+        $sth->bindValue(":id", $id, PDO::PARAM_INT);
+        $sth->execute();
+
+        $sth = $this->bdd->prepare("DELETE FROM COMMENTAIRE WHERE ID_ACTIVITE=:id");
+        $sth->bindValue(":id", $id, PDO::PARAM_INT);
+        $sth->execute();
+
         $sth = $this->bdd->prepare("DELETE FROM ACTIVITE WHERE ID=:id");
         $sth->bindValue(":id", $id, PDO::PARAM_INT);
-       
         $sth->execute();
     }
 
